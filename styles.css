@@ -87,15 +87,22 @@ body {
   z-index: 1;
   max-width: 600px;
   margin: 0 auto;
-}
-
-.search-container {
   background: white;
   padding: 40px;
   border-radius: 10px;
   width: 90%;
   max-width: 400px;
   text-align: center;
+  transform: translateX(-300px); 
+}
+
+.hero .search-container h1 {
+  text-align: left;
+  font-size: 40px; 
+  font-weight: bold; 
+  color: #2C2C2C; 
+  margin-bottom: 20px; 
+  line-height: 1.0; 
 }
 
 .search-container h1 {
@@ -110,25 +117,43 @@ body {
   gap: 15px;
 }
 
-/* Change text color for select fields and date input */
+.hero .search-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+}
+
+.hero .search-form .form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.hero .search-form label {
+  font-size: 16px;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+
 select, input[type="date"] {
-  color: #d9d9d9;  /* Set text color to #d9d9d9 */
-  background-color: white;  /* Ensure background remains white */
-  border: 1px solid #2c2c2c;  /* Light border */
+  
+  color: #d9d9d9;  
+  background-color: white;  
+  border: 1px solid #2c2c2c; 
   padding: 10px;
   font-size: 16px;
   width: 100%;
   border-radius: 5px;
 }
 
-/* Change the text color inside the select options */
 select option {
-  color: #d9d9d9;  /* Set text color to #d9d9d9 */
+  color: #d9d9d9;  
 }
 
-/* For the date input (ensuring consistent text color) */
 input[type="date"] {
-  color: #d9d9d9;  /* Set text color to #d9d9d9 */
+  color: #d9d9d9;  
 }
 
 
