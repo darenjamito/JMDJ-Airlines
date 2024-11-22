@@ -663,8 +663,8 @@ a {
 }
 
 .image-section img {
-  width: 80%; /* Adjust the percentage to make the image smaller */
-  max-width: 650px; /* You can set a maximum width if you want to limit the size */
+  width: 80%; 
+  max-width: 550px; 
   height: auto;
 }
 
@@ -675,5 +675,129 @@ a {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 20px; /* Adds space between the image and the button */
+  margin-top: 20px;
+}
+
+/*SEAT SELECTION PAGE*/
+
+/* Seat Selection Container */
+.seat-selection-container {
+  width: 100%;
+  height: 100vh;
+  background: rgba(255, 255, 255, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.seat-selection-container h1 {
+  font-size: 32px;
+  font-weight: bold;
+  color: #2C2C2C);
+}
+
+.seat-selection-container p {
+  font-size: 18px;
+  color: #757575;
+  margin-bottom: 20px;
+}
+
+/* Content Wrapper */
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100vh; 
+}
+
+
+/* Left Section */
+.left-section {
+  flex: 1;
+  max-width: 40%;
+  padding: 20px;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 18px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Legend */
+.legend {
+  margin-bottom: 20px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.legend-item .seat {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.legend-item .normal-seat {
+  background: rgba(0, 38, 99, 1);
+  border-radius: 4px;
+}
+
+.legend-item .emergency-seat {
+  background: rgba(236, 122, 8, 1);
+  border-radius: 4px;
+}
+
+.restroom-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+/* Seat Code Input */
+.seat-code-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.seat-code-input input {
+  width: calc(100% - 70px);
+  padding: 10px;
+  border: 1px solid rgba(117, 117, 117, 1);
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.seat-code-input button {
+  padding: 10px 20px;
+  background: #2C2C2C;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.seat-code-input button:hover {
+  background: #1a1a1a;
+}
+
+.right-section {
+  flex: 1;
+  max-width: 30%;
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  padding: 20px;
+}
+
+.seat-map img {
+  max-width: 100%;
+  border-radius: 18px;
 }
