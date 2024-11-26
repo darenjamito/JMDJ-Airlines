@@ -25,27 +25,78 @@
       </header>
 
 
-      <section class="userdetails-hero">
-        <div class="signup-container">
-          <div class="signup-box">
-            <h1>Flyer Details</h1>
-            <p>Chuchu</p>
-            <form>
-              <div class="form-row">
-                <input type="text" placeholder="First Name" required>
-                <input type="text" placeholder="Middle Name" required>
-                <input type="text" placeholder="Last Name" required>
-                <div class="form-group">
-                    <label for="date">Date</label>
-                    <input type="date" id="date" name="date">
-                  </div>                
-              </div>
-              <div class="form-row">
-                <input type="email" placeholder="Email" required>
-                <input type="text" placeholder="Username" required>
+      <section class="user-details-section">
+        <div class="details-header">
+          <h1>Flyer Details</h1>
+          <p>Please make sure that you enter your name exactly as it is shown on your Valid ID.</p>
         </div>
+        <form class="user-details-form">
+          <fieldset class="flyer-info">
+            <legend>Flyer</legend>
+        
+            <div class="form-row">
+              <div class="form-group">
+                <label for="title" class="required">Title</label>
+                <select id="title" required>
+                  <option value="" disabled selected>Title</option>
+                  <option value="Mr.">Mr.</option>
+                  <option value="Ms.">Ms.</option>
+                  <option value="Mrs.">Mrs.</option>
+                </select>
+              </div>
+        
+              <div class="form-group">
+                <label for="first-name" class="required">First Name</label>
+                <input type="text" id="first-name" placeholder="Enter First Name" required>
+              </div>
+        
+              <div class="form-group">
+                <label for="middle-initial" class="required">Middle Initial</label>
+                <input type="text" id="middle-initial" placeholder="Enter Middle Initial" required>
+              </div>
+        
+              <div class="form-group">
+                <label for="last-name" class="required">Last Name</label>
+                <input type="text" id="last-name" placeholder="Enter Last Name" required>
+              </div>
+            </div>
+        
+            <div class="form-row">
+              <div class="form-group">
+                <label for="nationality" class="required">Nationality</label>
+                <select id="nationality" required>
+                  <option value="" disabled selected>Select Nationality</option>
+                  <option value="Philippines">Philippines</option>
+                  <option value="USA">USA</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+        
+              <div class="form-group">
+                <label for="birthdate" class="required">Birthdate</label>
+                <input type="date" id="birthdate" required>
+              </div>
+            </div>
+          </fieldset>
+        
+          <fieldset class="contact-info">
+            <legend>Contact Information</legend>
+        
+            <div class="form-row">
+              <div class="form-group">
+                <label for="contact-number" class="required">Contact Number</label>
+                <input type="text" id="contact-number" placeholder="09XX-XXX-XXXX" required>
+              </div>
+        
+              <div class="form-group">
+                <label for="email" class="required">Email</label>
+                <input type="email" id="email" placeholder="sample@gmail.com" required>
+              </div>
+            </div>
+          </fieldset>
+        </form>
       </section>
-
+<section>
       <div class="action-buttons">
         <button class="exit-btn">Back</button>
         <button class="continue-btn">Continue</button>
