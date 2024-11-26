@@ -1022,3 +1022,89 @@ form label.required::after {
   content: " *";
   color: #FF0606;
 }
+
+/*PAYMENT*/
+.payment-form {
+  position: relative; 
+  z-index: 1;
+  margin: 0 auto;
+  margin: 50 px;
+  background: #ffffff;
+  max-width: 500px;
+  padding: 50px 40px;
+  border-radius: 15px;
+  margin-bottom: 40px;
+  text-align: left;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.payment-title {
+  text-align: center;
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #2c2c2c;
+}
+
+.card, .card-item {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.card label, .card-item label {
+  font-size: 16px;
+  font-weight: 700; 
+  color: #2c2c2c;   
+  margin-bottom: 2px;
+  display: block;
+}
+
+.card .input, .card-item .input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #757575;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.card .input:focus, .card-item .input:focus {
+  border-color: #2c2c2c;
+  outline: none;
+}
+
+.icon-relative i {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #aaa;
+}
+
+.card.grd, .card-item.grd {
+  display: flex;
+  gap: 15px;
+}
+
+.card-item {
+  width: 50%;
+}
+
+.btn {
+  text-align: center;
+  background-color: #2c2c2c;
+  color: white;
+  padding: 12px 0;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #1a1a1a;
+}
