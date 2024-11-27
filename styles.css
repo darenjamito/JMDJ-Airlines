@@ -1108,3 +1108,71 @@ form label.required::after {
 .btn:hover {
   background-color: #1a1a1a;
 }
+
+/*BOOKING CONFIRMATION*/
+.booking-confirmation {
+  max-width: 700px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 50px 40px;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 40px;
+}
+
+
+
+h2, h3 {
+  color: #2c2c2c;
+  margin-bottom: 10px;
+}
+
+h3 {
+  border-bottom: 2px solid #FFE900;
+  padding-bottom: 5px;
+}
+
+p, li {
+  color: #2c2c2c;
+  margin: 5px 0;
+}
+
+.flight-details, .guest-details, .payment-details, .fare-breakdown {
+  margin-bottom: 20px;
+}
+
+.flight-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.flight-line {
+  text-align: center;
+  flex-grow: 1;
+  position: relative;
+  padding: 0 10px;
+}
+
+.flight-line img {
+  width: 30px;
+}
+
+.guest-details p, .payment-details p {
+  margin: 5px 0;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  padding: 5px 0;
+}
+
+strong {
+  color: #2C2C2C;
+}
