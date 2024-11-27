@@ -1176,3 +1176,27 @@ ul li {
 strong {
   color: #2C2C2C;
 }
+
+.return-home {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 40px;
+  margin-bottom: 80px;
+}
+
+.return-home .exit-btn {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #f0c040;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.return-home .exit-btn:hover {
+  background-color: #d4a830;
+}
