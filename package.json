@@ -1,0 +1,20 @@
+{
+  "name": "jmdj-airlines",
+  "version": "1.0.0",
+  "description": "This is for a final project for CSCC 21.1 - Software Engineering 1. Group members: Borja, Endaya, Jamito, Ura-ura.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}

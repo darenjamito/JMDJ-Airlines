@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="icon" href="images/Logo 1.png" type="image/png"> 
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+          <img src="images/Home Page Logo.png">
+        </div>
+        <nav>
+          <ul id="navbar">
+            <li><a href="/">Home</a></li> <!-- Home is default active -->
+            <li><a href="/signup">Sign Up</a></li>
+            <li><a href="/login" class="active">Log In</a></li>
+          </ul>
+        </nav>
+      </header>
+
+  <!-- Login Hero Section -->
+  <section class="login-hero">
+    <div class="login-container">
+      <div class="login-box">
+        <h2>Login</h2>
+        <form>
+          <input type="text" placeholder="Enter Username" required>
+          <input type="password" placeholder="Enter Password" required>
+          <button type="submit">Log In</button>
+          <button type="button" class="signup-btn">Sign Up</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="logo">
+        <img src="images/Logo 2.png" alt="Footer Logo">
+      </div>
+      <p>
+        Address: Xavier University – Ateneo de Cagayan, 73 Corrales Ave, Cagayan de Oro, 9000 Misamis Oriental, Philippines
+      </p>
+      <p>Phone: (63+) 9664201083 or (088) 123 4567</p>
+      <p>Email: flyjmdjairlines@gmail.com</p>
+      <p>&copy; 2024, JMDJ Development – JMDJ Airlines Ticketing System</p>
+    </div>
+  </footer>
+  <script src="index.js"></script>
+  <script>
+    document.querySelector('.signup-btn').addEventListener('click', function() {
+      window.location.href = '/signup';
+    });
+  </script>
+</body>
+</html>
