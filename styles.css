@@ -1200,3 +1200,187 @@ strong {
 .return-home .exit-btn:hover {
   background-color: #d4a830;
 }
+
+
+
+/* ADMIN DASHBOARD */
+
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+
+}
+
+.date-search-input input {
+  flex: 1;
+  width: 100%;
+  text-align: left;
+  border-radius: 16px;
+  padding-left: 10px;
+}
+
+.date-search {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.flight-selection-database-title {
+  color: #2C2C2C;
+  margin-bottom: 50px;
+  font-size: 28px;
+  font-weight: bold;
+  gap: 10px;
+}
+
+.flight-search-container{
+  width:28%;
+  margin:auto;
+  text-align: left;  
+}
+
+
+.admin-flight-selection {
+  width: 100%;
+  border-radius: 16px;
+}
+
+.origin-destination-text {
+  text-align: left;
+  padding-left: 10px;
+} 
+
+.origin-search, .destination-search {
+  margin-bottom: 20px;
+}
+
+
+.action-buttons .exit-btn,
+.action-buttons .search-flight-btn {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.action-buttons .search-flight-btn {
+  background-color: rgb(255,233,0);
+  color: rgb(44,44,44);
+}
+
+/* Flight Selection ADMIN */
+
+.flight-info-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+  gap: 40px; 
+}
+
+.edit-btn, .remove-btn{
+  display: block;
+  margin: auto;
+  padding: 12px;
+  font-size: 16px;
+  background: #FFE900;
+  color: #2C2C2C;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.add-flight-btn{
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #FFE900;
+}
+
+.edit-btn{
+  margin-bottom: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.admin-flight-container{
+  margin-top:15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.grouped-container {
+  padding: 30px 50px;
+  text-align: left;
+}
+
+/* Add Flight */
+
+.add-flight-container{
+  padding: 20px;
+  border-radius:20px;
+  width:fit-content;
+  margin:auto;
+  border: 1px solid #2C2C2C;
+}
+
+.vertical-container{
+  display: inline-block;
+  vertical-align: top;
+  margin-left:30px;
+  margin-right:30px;
+}
+
+.departure-container{
+  height: 100px;
+}
+
+.departure-time-container, .arrival-time-container{
+  height: 100px;
+}
+
+.flight-no-container, .price-container{
+  height: 100px;
+}
+
+.departure-time-input, .arrival-time-input{
+  height: 40%;
+  border-radius:5px;
+  width: 60%;
+  font-size:16px;
+  padding-left:10px;
+}
+
+.date-input{
+  width: 100%;
+  height: 45px;
+}
+
+.flight-no-input{
+  height:40%;
+  border-radius:5px;
+  width: 50%;
+  font-size:16px;
+  padding-left:10px
+}
+
+.price-input{
+  height:40%;
+  border-radius:5px;
+  width: 50%;
+  font-size:16px;
+  padding-left:10px
+}
