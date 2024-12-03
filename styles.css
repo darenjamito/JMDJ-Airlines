@@ -618,8 +618,8 @@ a {
   margin-bottom: 80px;
 }
 
-.action-buttons .exit-btn,
-.action-buttons .continue-btn {
+.action-buttons, .exit-btn,
+.action-buttons, .continue-btn {
   padding: 12px 20px;
   font-size: 16px;
   font-weight: 600;
@@ -628,21 +628,21 @@ a {
   cursor: pointer;
 }
 
-.action-buttons .exit-btn {
+.action-buttons, .exit-btn {
   background-color: #d9d9d9;
   color: #2C2C2C;
 }
 
-.action-buttons .continue-btn {
+.action-buttons, .continue-btn {
   background-color: #2C2C2C;
   color: white;
 }
 
-.action-buttons .exit-btn:hover {
+.action-buttons, .exit-btn:hover {
   background-color: #c4c4c4;
 }
 
-.action-buttons .continue-btn:hover {
+.action-buttons, .continue-btn:hover {
   background-color: #1a1a1a;
 }
 
@@ -694,7 +694,7 @@ a {
 .seat-selection-container h1 {
   font-size: 32px;
   font-weight: bold;
-  color: #2C2C2C);
+  color: (#2C2C2C);
 }
 
 .seat-selection-container p {
@@ -736,18 +736,18 @@ a {
   margin-bottom: 10px;
 }
 
-.legend-item .seat {
+.legend-item, .seat {
   width: 20px;
   height: 20px;
   margin-right: 10px;
 }
 
-.legend-item .normal-seat {
+.legend-item, .normal-seat {
   background: rgba(0, 38, 99, 1);
   border-radius: 4px;
 }
 
-.legend-item .emergency-seat {
+.legend-item, .emergency-seat {
   background: rgba(236, 122, 8, 1);
   border-radius: 4px;
 }
@@ -1383,4 +1383,65 @@ strong {
   width: 50%;
   font-size:16px;
   padding-left:10px
+}
+
+/* Flight History */
+
+.full-container{
+  margin:auto;
+  width:fit-content;
+}
+
+.entire-flight-history-container{
+  margin-bottom: 20px;
+}
+
+.flight-history-container{
+  margin:auto;
+  width:fit-content;
+  padding: 10px;
+  border: 1px solid rgb(117, 117, 117);
+  border-radius: 25px;
+  margin-bottom: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+
+.select-btn-2{
+  background-color: #FFE900;
+  color: #2C2C2C;
+  font-weight: 600;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 20px;
+}
+
+.flight-history-info{
+  display: inline-block;
+  margin-right: 160px;
+  box-shadow: 20px 20px 30px rgb(0,0,0,0.02);
+}
+
+.date-booked-label, .date-booked-output,
+.departure-label, .departure-output,
+.arrival-label, .arrival-output,
+.booking-reference-label, .booking-reference-output{
+  display: inline-block;
+}
+
+.date-booked-label, .departure-label, .arrival-label, .booking-reference-label{
+  font-weight: bolder;
+  margin-right: 5px;
+}
+
+.action-buttons-2 {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 40px;
+  margin-bottom: 80px;
 }
