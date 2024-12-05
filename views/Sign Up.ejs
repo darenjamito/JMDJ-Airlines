@@ -26,18 +26,19 @@
     <div class="signup-container">
       <div class="signup-box">
         <h1>Sign Up</h1>
-        <form>
+        <form id="signupForm">
           <div class="form-row">
-            <input type="text" placeholder="First Name" required>
-            <input type="text" placeholder="Last Name" required>
+            <input type="text" name="firstName" placeholder="First Name" required>
+            <input type="text" name="lastName" placeholder="Last Name" required>
           </div>
           <div class="form-row">
-            <input type="email" placeholder="Email" required>
-            <input type="text" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="username" placeholder="Username" required>
           </div>
-          <input type="password" placeholder="Password" required>
+          <input type="password" name="password" placeholder="Password" required>
           <button type="submit">Register</button>
         </form>
+        <div id="alertMessage" style="color: red; margin-top: 10px; text-align: center;"></div>
       </div>
     </div>
   </section>
@@ -55,6 +56,6 @@
       <p>&copy; 2024, JMDJ Development – JMDJ Airlines Ticketing System</p>
     </div>
   </footer>
-  <script src="index.js"></script>
+  <script src="signup.js"></script>
 </body>
 </html>

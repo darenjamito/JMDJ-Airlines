@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= isAdmin ? 'Admin Bookings' : 'My Bookings' %> - JMDJ Airlines</title>
+    <link rel="icon" href="/images/Logo 1.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/css/admin-modal.css">
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-yellow: #FFD700;
+            --dark-yellow: #B8860B;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        .booking-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+            width: 100%;
+        }
+
+        .booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .booking-header h3 {
+            color: #333;
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .status-badge {
+            background: #fff;
+            color: #333;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            border: 1px solid #ddd;
+        }
+
+        .booking-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+        }
+
+        .detail-group {
+            font-size: 0.9rem;
+            padding-right: 0.5rem;
+        }
+
+        .detail-label {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-value {
+            color: #333;
+        }
+
+        .page-title {
+            color: #333;
+            margin: 1.5rem 0;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .bookings-container {
+            flex: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .footer {
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            .bookings-container {
+                max-width: 600px;
+            }
+            .booking-details {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .bookings-container {
+                max-width: 100%;
+                padding: 0 0.5rem;
+            }
+            .booking-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="/images/Home Page Logo.png" alt="JMDJ Airlines Logo">
+        </div>
+        <nav>
+            <ul id="navbar">
+                <% if (isAdmin) { %>
+                    <li><a href="/admin/dashboard">Dashboard</a></li>
+                    <li><a href="/admin/flights">List of Flights</a></li>
+                    <li><a href="/admin/bookings" class="active">Bookings</a></li>
+                    <li><a href="/admin/users">Users</a></li>
+                    <li><a href="#" onclick="event.preventDefault(); showLogoutModal()">Logout</a></li>
+                <% } else { %>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/signup">Sign Up</a></li>
+                    <li><a href="/login">Log In</a></li>
+                    <li><a href="/bookings" class="active">Bookings</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="bookings-container">
+        <h1 class="page-title"><%= isAdmin ? 'All Bookings' : 'My Bookings' %></h1>
+        
+        <% if (bookings && bookings.length > 0) { %>
+            <% bookings.forEach(booking => { %>
+                <div class="booking-card">
+                    <div class="booking-header">
+                        <h3>Booking ID: <%= booking._id %></h3>
+                        <span class="status-badge status-confirmed">Confirmed</span>
+                    </div>
+                    <div class="booking-details">
+                        <div class="detail-group">
+                            <div class="detail-label">Flight</div>
+                            <div class="detail-value">
+                                <%= booking.flightCode %><br>
+                                <%= booking.from %> → <%= booking.to %>
+                            </div>
+                        </div>
+
+                        <div class="detail-group">
+                            <div class="detail-label">Departure</div>
+                            <div class="detail-value">
+                                <%= booking.departDate %><br>
+                                <%= booking.departTime %>
+                            </div>
+                        </div>
+
+                        <div class="detail-group">
+                            <div class="detail-label">Arrival</div>
+                            <div class="detail-value">
+                                <%= booking.arrivalDate %><br>
+                                <%= booking.arrivalTime %>
+                            </div>
+                        </div>
+
+                        <div class="detail-group">
+                            <div class="detail-label">Passenger</div>
+                            <div class="detail-value">
+                                <%= booking.title %> <%= booking.firstName %> <%= booking.middleInitial %> <%= booking.lastName %><br>
+                                <%= booking.contactNumber %>
+                            </div>
+                        </div>
+
+                        <div class="detail-group">
+                            <div class="detail-label">Travel Details</div>
+                            <div class="detail-value">
+                                Seat: <%= booking.seat %><br>
+                                Baggage: <%= booking.baggage %>
+                            </div>
+                        </div>
+
+                        <div class="detail-group">
+                            <div class="detail-label">Price & Date</div>
+                            <div class="detail-value">
+                                <%= booking.ticketPrice %><br>
+                                <%= booking.bookingDate %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <div class="no-bookings">
+                <h2>No bookings found</h2>
+                <p><%= isAdmin ? 'There are no bookings in the system yet.' : 'You haven\'t made any bookings yet. Start your journey by booking a flight!' %></p>
+            </div>
+        <% } %>
+    </div>
+
+    <% if (isAdmin) { %>
+        <form id="logout-form" action="/api/logout" method="POST" style="display: none;"></form>
+
+        <!-- Logout Confirmation Modal -->
+        <div id="logoutModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Confirm Logout</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to logout?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="admin-btn admin-btn-secondary" onclick="closeLogoutModal()">Cancel</button>
+                    <button class="admin-btn admin-btn-danger" onclick="confirmLogout()">Logout</button>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .admin-btn-danger {
+                background-color: #dc3545;
+                color: white;
+            }
+            .admin-btn-danger:hover {
+                background-color: #c82333;
+            }
+        </style>
+
+        <script>
+            // Logout Modal Functions
+            function showLogoutModal() {
+                document.getElementById('logoutModal').classList.add('show');
+            }
+
+            function closeLogoutModal() {
+                document.getElementById('logoutModal').classList.remove('show');
+            }
+
+            function confirmLogout() {
+                document.getElementById('logout-form').submit();
+            }
+
+            // Close modal when clicking outside
+            window.onclick = function(event) {
+                const modal = document.getElementById('logoutModal');
+                if (event.target === modal) {
+                    closeLogoutModal();
+                }
+            }
+
+            // Close modal when clicking the X button
+            document.querySelector('.close').onclick = function() {
+                closeLogoutModal();
+            }
+        </script>
+    <% } %>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="logo">
+                <img src="/images/Logo 2.png" alt="Footer Logo">
+            </div>
+            <p>
+                Address: Xavier University – Ateneo de Cagayan, 73 Corrales Ave, Cagayan de Oro, 9000 Misamis Oriental, Philippines
+            </p>
+            <p>Phone: (63+) 9664201083 or (088) 123 4567</p>
+            <p>Email: flyjmdjairlines@gmail.com</p>
+            <p>&copy; 2024, JMDJ Development – JMDJ Airlines Ticketing System</p>
+        </div>
+    </footer>
+</body>
+</html>

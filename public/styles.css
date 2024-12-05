@@ -18,9 +18,67 @@ body {
   background-color: white;
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   z-index: 10;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header .logo {
+  display: flex;
+  align-items: center;
+}
+
+.header nav {
+  display: flex;
+  align-items: center;
+}
+
+#navbar {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#navbar li {
+  margin: 0;
+  padding: 0;
+}
+
+#navbar li a {
+  color: #2c2c2c;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.4s ease;
+  padding: 0;
+  display: block;
+}
+
+.admin-container {
+  padding-top: 100px;
+  padding-bottom: 50px;
+  min-height: calc(100vh - 200px);
+}
+
+/* Common styles for all admin pages */
+.admin-header,
+.grouped-container h2,
+.add-flight-container {
+  background-color: white;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Override any background colors for admin pages */
+.flight-selection .header,
+.admin-container .header,
+body > .header {
+  background-color: white;
 }
 
 .logo img {
@@ -93,7 +151,6 @@ body {
   width: 90%;
   max-width: 400px;
   text-align: center;
-  transform: translateX(-300px); 
 }
 
 .hero .search-container h1 {
@@ -138,8 +195,7 @@ body {
 
 
 select, input[type="date"] {
-  
-  color: #d9d9d9;  
+  color: #2c2c2c;  
   background-color: white;  
   border: 1px solid #2c2c2c; 
   padding: 10px;
@@ -149,20 +205,11 @@ select, input[type="date"] {
 }
 
 select option {
-  color: #d9d9d9;  
+  color: #2c2c2c;  
 }
 
 input[type="date"] {
-  color: #d9d9d9;  
-}
-
-
-.search-form button {
-  padding: 10px;
-  font-size: 16px;
-  width: 100%;
-  border: 1px solid #d9d9d9;
-  border-radius: 5px;
+  color: #2c2c2c;  
 }
 
 .search-form button {
@@ -174,6 +221,7 @@ input[type="date"] {
   border-radius: 5px;
   cursor: pointer;
   font-weight: 800;
+  width: 100%;
 }
 
 
@@ -403,6 +451,7 @@ a {
   font-size: 14px;
   line-height: 1.6; 
   margin: 5px 0;
+  color: white;
 }
 
 .footer p:last-child {
@@ -613,19 +662,23 @@ a {
 .action-buttons {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: 40px;
-  margin-bottom: 80px;
+  gap: 20px;
+  margin: 30px auto;
+  max-width: 600px;
+  padding: 0 30px;
 }
 
 .action-buttons .exit-btn,
-.action-buttons .continue-btn {
-  padding: 12px 20px;
+.action-buttons .continue-btn,
+.action-buttons .search-flight-btn {
+  padding: 12px;
   font-size: 16px;
   font-weight: 600;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  width: 180px;
+  text-align: center;
 }
 
 .action-buttons .exit-btn {
@@ -633,7 +686,8 @@ a {
   color: #2C2C2C;
 }
 
-.action-buttons .continue-btn {
+.action-buttons .continue-btn,
+.action-buttons .search-flight-btn {
   background-color: #2C2C2C;
   color: white;
 }
@@ -642,7 +696,8 @@ a {
   background-color: #c4c4c4;
 }
 
-.action-buttons .continue-btn:hover {
+.action-buttons .continue-btn:hover,
+.action-buttons .search-flight-btn:hover {
   background-color: #1a1a1a;
 }
 
@@ -694,7 +749,7 @@ a {
 .seat-selection-container h1 {
   font-size: 32px;
   font-weight: bold;
-  color: #2C2C2C);
+  color: #2C2C2C;
 }
 
 .seat-selection-container p {
@@ -1199,4 +1254,889 @@ strong {
 
 .return-home .exit-btn:hover {
   background-color: #d4a830;
+}
+
+.payment-form .btn {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #2C2C2C;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.payment-form .btn:hover {
+  opacity: 0.9;
+}
+
+/* Admin Styles */
+.admin-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.admin-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #2C2C2C;
+}
+
+.admin-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.admin-btn i {
+  font-size: 14px;
+}
+
+.admin-btn-primary {
+  background-color: #FFE900;
+  color: #2C2C2C;
+}
+
+.admin-btn-secondary {
+  background-color: #2C2C2C;
+  color: white;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.admin-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  color: #2C2C2C;
+}
+
+.admin-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.admin-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin-form-group {
+  margin-bottom: 20px;
+}
+
+.admin-form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #2C2C2C;
+}
+
+.admin-form-group input,
+.admin-form-group select,
+.admin-form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.admin-form-group input:focus,
+.admin-form-group select:focus,
+.admin-form-group textarea:focus {
+  border-color: #FFE900;
+  outline: none;
+}
+
+.admin-status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.admin-status-active {
+  background-color: #e6f7e9;
+  color: #137333;
+}
+
+.admin-status-inactive {
+  background-color: #fce8e6;
+  color: #c5221f;
+}
+
+.admin-status-pending {
+  background-color: #fff8e1;
+  color: #f9a825;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.admin-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.admin-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2C2C2C;
+}
+
+.admin-card-content {
+  color: #757575;
+}
+
+.admin-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.admin-pagination-btn {
+  padding: 8px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  background: white;
+  cursor: pointer;
+}
+
+.admin-pagination-btn.active {
+  background-color: #FFE900;
+  border-color: #FFE900;
+  color: #2C2C2C;
+}
+
+/* Additional Admin Dashboard Styles */
+.admin-section {
+    margin-top: 40px;
+}
+
+.admin-section h2 {
+    color: #2C2C2C;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.admin-card {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+}
+
+.admin-card i {
+    font-size: 24px;
+    color: #FFE900;
+}
+
+.admin-card-content h2 {
+    font-size: 32px;
+    margin: 10px 0;
+    color: #2C2C2C;
+}
+
+.admin-card-content p {
+    font-size: 14px;
+    color: #757575;
+}
+
+/* Admin Navigation Styles */
+.admin-nav {
+    background: #2C2C2C;
+    padding: 15px 0;
+}
+
+.admin-nav #navbar li a {
+    color: white;
+}
+
+.admin-nav #navbar li a:hover,
+.admin-nav #navbar li a.active {
+    color: #FFE900;
+}
+
+/* Admin Table Enhancements */
+.admin-table th {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.admin-table td {
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.admin-table button {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+/* Admin Status Badge Enhancements */
+.admin-status {
+    display: inline-block;
+    min-width: 85px;
+    text-align: center;
+}
+
+/* Admin Button Hover Effects */
+.admin-btn-primary:hover {
+    background-color: #e5d200;
+}
+
+.admin-btn-secondary:hover {
+    background-color: #1a1a1a;
+}
+
+/* Admin Grid Responsiveness */
+@media (max-width: 1200px) {
+    .admin-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-form {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .admin-table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+/* Admin Flight Selection Styles */
+.admin-flight-selection {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d9d9d9;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #2C2C2C;
+    background-color: white;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-flight-selection:focus {
+    border-color: #FFE900;
+    box-shadow: 0 0 6px rgba(255, 233, 0, 0.4);
+    outline: none;
+}
+
+.admin-flight-selection option {
+    color: #2C2C2C;
+    padding: 8px;
+}
+
+/* Recent Bookings Table Styles */
+.bookings-table-container {
+    margin-top: 20px;
+    overflow-x: auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+}
+
+.bookings-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: #fff;
+}
+
+.bookings-table th,
+.bookings-table td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.bookings-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #333;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.bookings-table th:first-child {
+    border-top-left-radius: 8px;
+}
+
+.bookings-table th:last-child {
+    border-top-right-radius: 8px;
+}
+
+.bookings-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.bookings-table tbody tr:hover {
+    background-color: #f8f9fa;
+    transition: background-color 0.2s ease;
+}
+
+.bookings-table td {
+    font-size: 0.95rem;
+    color: #444;
+}
+
+.status-confirmed,
+.status-pending,
+.status-cancelled {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-confirmed {
+    background-color: #e3f7e9;
+    color: #0a5c2c;
+}
+
+.status-pending {
+    background-color: #fff8e6;
+    color: #946c00;
+}
+
+.status-cancelled {
+    background-color: #ffe8e8;
+    color: #c92a2a;
+}
+
+/* Recent Bookings Section Header */
+#recent-bookings h2 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+/* Admin Add Flight Styles */
+.add-flight-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+.vertical-container {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.departure-container,
+.departure-time-container,
+.arrival-time-container,
+.flight-no-container,
+.price-container,
+.date-container {
+    width: 100%;
+}
+
+.departure-label,
+.departure-time-label,
+.arrival-time-label,
+.flight-no-label,
+.price-label,
+.date-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin-bottom: 8px;
+}
+
+.departure-selection-select,
+.departure-time-input,
+.arrival-time-input,
+.flight-no-input,
+.price-input,
+.date-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #2c2c2c;
+    background-color: white;
+}
+
+.departure-selection-select:focus,
+.departure-time-input:focus,
+.arrival-time-input:focus,
+.flight-no-input:focus,
+.price-input:focus,
+.date-input:focus {
+    outline: none;
+    border-color: #dba400;
+    box-shadow: 0 0 5px rgba(219, 164, 0, 0.3);
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px auto;
+    max-width: 600px;
+    padding: 0 30px;
+}
+
+.exit-btn,
+.add-flight-btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 180px;
+    height: 45px;
+    text-align: center;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.exit-btn {
+    background-color: #f5f5f5;
+    color: #2c2c2c;
+}
+
+.add-flight-btn {
+    background-color: #FFE900;
+    color: #2c2c2c;
+}
+
+.exit-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.add-flight-btn:hover {
+    background-color: #dba400;
+}
+
+/* Fix header links for admin pages */
+.header a {
+    text-decoration: none;
+    color: #2c2c2c;
+}
+
+.header img {
+    max-height: 40px;
+    width: auto;
+}
+
+/* Admin List of Flights Styles */
+.grouped-container {
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 2rem;
+}
+
+.grouped-container h2 {
+    color: #333;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-flight-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.flight-info-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.flight-info-container:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.details {
+    flex: 1;
+    max-width: 200px;
+}
+
+.details h3 {
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.details p {
+    color: #666;
+    margin: 0.2rem 0;
+    font-size: 0.9rem;
+}
+
+.arrow {
+    font-size: 1.5rem;
+    color: #FFE900;
+    margin: 0 1rem;
+}
+
+.duration {
+    color: #666;
+    font-size: 0.9rem;
+    min-width: 80px;
+    text-align: center;
+}
+
+.flight-code {
+    color: #333;
+    font-weight: 600;
+    min-width: 100px;
+    text-align: center;
+}
+
+.price {
+    color: #dba400;
+    font-weight: 600;
+    font-size: 1.1rem;
+    min-width: 120px;
+    text-align: right;
+}
+
+.admin-buttons {
+    display: flex;
+    gap: 0.5rem;
+    min-width: 160px;
+    justify-content: flex-end;
+}
+
+.edit-btn, .remove-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.edit-btn {
+    background-color: #FFE900;
+    color: #333;
+}
+
+.edit-btn:hover {
+    background-color: #dba400;
+    color: #fff;
+}
+
+.remove-btn {
+    background-color: #ff4444;
+    color: #fff;
+}
+
+.remove-btn:hover {
+    background-color: #cc0000;
+}
+
+.add-flight-btn {
+    background-color: #FFE900;
+    color: #333;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.add-flight-btn:hover {
+    background-color: #dba400;
+    color: #fff;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .flight-info-container {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .details {
+        flex: 1 1 40%;
+    }
+
+    .arrow {
+        flex: 0 0 auto;
+    }
+
+    .duration, .flight-code, .price {
+        flex: 1 1 auto;
+    }
+
+    .admin-buttons {
+        flex: 1 1 100%;
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 768px) {
+    .grouped-container {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    .details {
+        flex: 1 1 100%;
+        max-width: none;
+    }
+
+    .flight-info-container {
+        padding: 1rem;
+    }
+}
+
+/* Admin Flight Selection Styles */
+#search-flights {
+    scroll-margin-top: 100px;
+}
+
+.admin-flight-selection {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d9d9d9;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #2C2C2C;
+    background-color: white;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-flight-selection:focus {
+    border-color: #FFE900;
+    box-shadow: 0 0 6px rgba(255, 233, 0, 0.4);
+    outline: none;
+}
+
+.admin-flight-selection option {
+    color: #2C2C2C;
+    padding: 8px;
+}
+
+/* Recent Bookings Table Styles */
+.bookings-table-container {
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+.bookings-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.bookings-table th,
+.bookings-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.bookings-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #333;
+}
+
+.bookings-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.status-confirmed,
+.status-pending,
+.status-cancelled {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.status-confirmed {
+    background-color: #e3f7e9;
+    color: #0a5c2c;
+}
+
+.status-pending {
+    background-color: #fff8e6;
+    color: #946c00;
+}
+
+.status-cancelled {
+    background-color: #ffe8e8;
+    color: #c92a2a;
+}
+
+/* Recent Bookings Table Styles */
+.bookings-table-container {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+.bookings-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.bookings-table th,
+.bookings-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.bookings-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #333;
+}
+
+.bookings-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.status-confirmed,
+.status-pending,
+.status-cancelled {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.status-confirmed {
+  background-color: #e3f7e9;
+  color: #0a5c2c;
+}
+
+.status-pending {
+  background-color: #fff8e6;
+  color: #946c00;
+}
+
+.status-cancelled {
+  background-color: #ffe8e8;
+  color: #c92a2a;
+}
+
+.cancel-button {
+    background-color: #E0E0E0;
+    color: #2C2C2C;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cancel-button:hover {
+    background-color: #D0D0D0;
 }

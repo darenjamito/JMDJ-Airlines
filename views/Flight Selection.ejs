@@ -24,64 +24,38 @@
 
 
     <section class="flight-route">
-      <h2>Depart - CGY TO CEB</h2>
+      <h2>Depart - <%= from %> TO <%= to %></h2>
       <p>Displayed fares are current lowest available and may not apply if you do not satisfy the booking conditions.</p>
       <div class="flight-options">
-        <div class="flight-option">
-          <div class="details">
-            <h3>Cagayan de Oro</h3>
-            <p>04:00</p>
-            <p>Mon, 09 Dec</p>
+        <% flights.forEach((flight, index) => { %>
+          <div class="flight-option" id="flight-option-<%= index + 1 %>"
+            data-flight-code="<%= flight.Flight_Code %>"
+            data-depart="<%= flight.Depart %>"
+            data-depart-date="<%= flight.Depart_Date %>"
+            data-depart-time="<%= flight.Depart_Time %>"
+            data-arrival="<%= flight.Arrival %>"
+            data-arrival-date="<%= flight.Arrival_Date %>"
+            data-arrival-time="<%= flight.Arrival_Time %>"
+            data-flight-duration="<%= flight.Flight_Duration %>"
+            data-ticket-price="<%= flight.Ticket_Price %>">
+            <div class="details">
+              <h3><%= flight.Depart %></h3>
+              <p><%= flight.Depart_Time %></p>
+              <p><%= flight.Depart_Date %></p>
+            </div>
+            <div class="arrow">→</div>
+            <div class="details">
+              <h3><%= flight.Arrival %></h3>
+              <p><%= flight.Arrival_Time %></p>
+              <p><%= flight.Arrival_Date %></p>
+            </div>
+            <div class="duration"><%= flight.Flight_Duration %></div>
+            <div class="flight-code"><%= flight.Flight_Code %></div>
+            <div class="price"><%= flight.Ticket_Price %></div>
+            <button class="select-btn" id="select-btn-<%= index + 1 %>">Select</button>
           </div>
-          <div class="arrow">→</div>
-          <div class="details">
-            <h3>Cebu</h3>
-            <p>04:40</p>
-            <p>Mon, 09 Dec</p>
-          </div>
-          <div class="duration">0h 40m</div>
-          <div class="flight-code">JM 0912</div>
-          <div class="price">PHP 7,485.00</div>
-          <button class="select-btn">Select</button>
-        </div>
-
-        <div class="flight-option">
-          <div class="details">
-            <h3>Cagayan de Oro</h3>
-            <p>10:00</p>
-            <p>Mon, 09 Dec</p>
-          </div>
-          <div class="arrow">→</div>
-          <div class="details">
-            <h3>Cebu</h3>
-            <p>11:00</p>
-            <p>Mon, 09 Dec</p>
-          </div>
-          <div class="duration">0h 40m</div>
-          <div class="flight-code">JM 0710</div>
-          <div class="price">PHP 7,280.00</div>
-          <button class="select-btn">Select</button>
-        </div>
-
-        <div class="flight-option">
-          <div class="details">
-            <h3>Cagayan de Oro</h3>
-            <p>12:20</p>
-            <p>Mon, 09 Dec</p>
-          </div>
-          <div class="arrow">→</div>
-          <div class="details">
-            <h3>Cebu</h3>
-            <p>13:00</p>
-            <p>Mon, 09 Dec</p>
-          </div>
-          <div class="duration">0h 40m</div>
-          <div class="flight-code">JM 1970</div>
-          <div class="price">PHP 7,550.00</div>
-          <button class="select-btn">Select</button>
-        </div>
+        <% }); %>
       </div>
-
       <div class="action-buttons">
         <button class="exit-btn">Exit</button>
         <button class="continue-btn">Continue</button>
@@ -102,5 +76,97 @@
     </div>
   </footer>
   </div>
+  <script src="index.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Function to reset the border of all flight options
+      function resetAllBorders() {
+        document.querySelectorAll('.flight-option').forEach(function(option) {
+          option.style.border = '1px solid #DDD';
+        });
+      }
+
+      let selectedFlightData = null;
+      let isFlightSelected = false;
+
+      function selectFlight(flightOption) {
+        resetAllBorders();
+        flightOption.style.border = '2px solid #FFE900';
+        isFlightSelected = true;
+
+        // Store the selected flight data
+        selectedFlightData = {
+          flightCode: flightOption.getAttribute('data-flight-code'),
+          depart: flightOption.getAttribute('data-depart'),
+          departDate: flightOption.getAttribute('data-depart-date'),
+          departTime: flightOption.getAttribute('data-depart-time'),
+          arrival: flightOption.getAttribute('data-arrival'),
+          arrivalDate: flightOption.getAttribute('data-arrival-date'),
+          arrivalTime: flightOption.getAttribute('data-arrival-time'),
+          flightDuration: flightOption.getAttribute('data-flight-duration'),
+          ticketPrice: flightOption.getAttribute('data-ticket-price')
+        };
+      }
+
+      // Add event listeners for select buttons if they exist
+      const selectBtn1 = document.querySelector('#select-btn-1');
+      if (selectBtn1) {
+        selectBtn1.addEventListener('click', function() {
+          selectFlight(document.querySelector('#flight-option-1'));
+        });
+      }
+
+      const selectBtn2 = document.querySelector('#select-btn-2');
+      if (selectBtn2) {
+        selectBtn2.addEventListener('click', function() {
+          selectFlight(document.querySelector('#flight-option-2'));
+        });
+      }
+
+      const selectBtn3 = document.querySelector('#select-btn-3');
+      if (selectBtn3) {
+        selectBtn3.addEventListener('click', function() {
+          selectFlight(document.querySelector('#flight-option-3'));
+        });
+      }
+
+      // Exit button event listener
+      const exitBtn = document.querySelector('.exit-btn');
+      if (exitBtn) {
+        exitBtn.addEventListener('click', function() {
+          window.location.href = '/';
+        });
+      }
+
+      // Continue button event listener if it exists
+      const continueBtn = document.querySelector('.continue-btn');
+      if (continueBtn) {
+        continueBtn.addEventListener('click', function(e) {
+          if (!isFlightSelected) {
+            e.preventDefault();
+            this.setCustomValidity('Please select a flight before continuing.');
+            this.reportValidity();
+            this.setCustomValidity('');
+          } else {
+            // Construct URL with selected flight data as query parameters
+            const params = new URLSearchParams({
+              from: '<%= from %>',
+              to: '<%= to %>',
+              flightCode: selectedFlightData.flightCode,
+              depart: selectedFlightData.depart,
+              departDate: selectedFlightData.departDate,
+              departTime: selectedFlightData.departTime,
+              arrival: selectedFlightData.arrival,
+              arrivalDate: selectedFlightData.arrivalDate,
+              arrivalTime: selectedFlightData.arrivalTime,
+              flightDuration: selectedFlightData.flightDuration,
+              ticketPrice: selectedFlightData.ticketPrice
+            });
+            window.location.href = `/seat-selection?${params.toString()}`;
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>

@@ -17,9 +17,9 @@
         </div>
         <nav>
           <ul id="navbar">
-            <li><a href="Home Page.html">Home</a></li> 
-            <li><a href="sign up.html">Sign Up</a></li>
-            <li><a href="login.html">Log In</a></li>
+            <li><a href="/">Home</a></li> 
+            <li><a href="/signup">Sign Up</a></li>
+            <li><a href="/login">Log In</a></li>
           </ul>
         </nav>
       </header>
@@ -86,6 +86,86 @@
   </div>
 </footer>
 </div>
+<script>
+  let isSeatSelected = false;
+
+  // Define array of valid seats
+  const validSeats = [
+    '2A', '2D', '2F',
+    '3A', '3D', '3F',
+    '4A', '4D', '4F',
+    '5A', '5D', '5F',
+    '6A', '6D', '6F',
+    '7A', '7D', '7F',
+    '8A', '8D', '8F',
+    '9A', '9D', '9F',
+    '10A', '10D', '10F',
+    '11A', '11D', '11F',
+    '12A', '12C', '12D', '12F'
+  ];
+
+  // Get DOM elements
+  const seatInput = document.querySelector('.seat-code-input input');
+  const chooseButton = document.querySelector('.seat-code-input button');
+
+  // Add validation to choose button
+  chooseButton.addEventListener('click', function() {
+    const selectedSeat = seatInput.value.toUpperCase();
+    
+    if (validSeats.includes(selectedSeat)) {
+      isSeatSelected = true;
+      seatInput.style.borderColor = '#4CAF50';
+      this.setCustomValidity('Seat ' + selectedSeat + ' selected successfully.');
+      this.reportValidity();
+      this.setCustomValidity('');
+    } else {
+      isSeatSelected = false;
+      seatInput.style.borderColor = '#ff0000';
+      this.setCustomValidity('Invalid seat selection. Please choose a valid seat.');
+      this.reportValidity();
+      this.setCustomValidity('');
+    }
+  });
+
+  // Add input validation
+  seatInput.addEventListener('input', function() {
+    this.value = this.value.toUpperCase();
+    this.style.borderColor = '';
+  });
+
+  document.querySelector('.exit-btn').addEventListener('click', function() {
+    // Get only the from and to parameters from the current URL
+    const currentUrl = new URL(window.location.href);
+    const params = new URLSearchParams();
+    
+    // Preserve only from, to, and departDate parameters
+    params.set('from', currentUrl.searchParams.get('from'));
+    params.set('to', currentUrl.searchParams.get('to'));
+    params.set('departDate', currentUrl.searchParams.get('departDate'));
+    
+    // Navigate back to flight selection with only from/to parameters
+    window.location.href = `/flight-selection?${params.toString()}`;
+  });
+  
+  document.querySelector('.continue-btn').addEventListener('click', function(e) {
+    if (!isSeatSelected) {
+      e.preventDefault();
+      this.setCustomValidity('Please select a seat before continuing.');
+      this.reportValidity();
+      this.setCustomValidity('');
+    } else {
+      // Get all existing query parameters from the current URL
+      const currentUrl = new URL(window.location.href);
+      const params = new URLSearchParams(currentUrl.search);
+      
+      // Add the selected seat to the existing parameters
+      params.set('seat', seatInput.value.toUpperCase());
+      
+      // Navigate to the next page with all parameters preserved
+      window.location.href = `/baggage-selection?${params.toString()}`;
+      }
+  });
+</script>
 </body>
 </html>
 

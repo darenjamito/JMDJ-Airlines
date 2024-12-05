@@ -27,12 +27,13 @@
     <div class="login-container">
       <div class="login-box">
         <h2>Login</h2>
-        <form>
-          <input type="text" placeholder="Enter Username" required>
-          <input type="password" placeholder="Enter Password" required>
+        <form id="loginForm">
+          <input type="text" name="username" placeholder="Enter Username" required>
+          <input type="password" name="password" placeholder="Enter Password" required>
           <button type="submit">Log In</button>
           <button type="button" class="signup-btn">Sign Up</button>
         </form>
+        <div id="alertMessage" style="color: red; margin-top: 10px; text-align: center;"></div>
       </div>
     </div>
   </section>
@@ -51,6 +52,7 @@
     </div>
   </footer>
   <script src="index.js"></script>
+  <script src="login.js"></script>
   <script>
     document.querySelector('.signup-btn').addEventListener('click', function() {
       window.location.href = '/signup';

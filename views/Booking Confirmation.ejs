@@ -7,107 +7,641 @@
   <link rel="icon" href="images/Logo 1.png" type="image/png"> 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      --primary-yellow: #FFD700;
+      --secondary-yellow: #FFC000;
+      --dark-yellow: #B8860B;
+      --light-yellow: #FFFACD;
+      --accent-blue: #1a73e8;
+    }
+
+    .booking-confirmation {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 2.5rem;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      position: relative;
+      border: 2px solid var(--primary-yellow);
+    }
+
+    .booking-confirmation::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 20px;
+      background: var(--primary-yellow);
+      border-radius: 10px;
+    }
+
+    .confirmation-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 3px solid var(--primary-yellow);
+      position: relative;
+    }
+
+    .confirmation-header h2 {
+      color: var(--dark-yellow);
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .flight-details {
+      background: var(--light-yellow);
+      padding: 2rem;
+      border-radius: 15px;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .flight-details::after {
+      content: '✈';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 2rem;
+      color: var(--primary-yellow);
+      opacity: 0.3;
+    }
+
+    .route {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--primary-yellow);
+      position: relative;
+    }
+
+    .route h2 {
+      color: var(--dark-yellow);
+      margin-bottom: 0.5rem;
+      font-size: 1.6rem;
+    }
+
+    .route .time-info {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .time-info .date {
+      color: var(--dark-yellow);
+      font-weight: 600;
+    }
+
+    .time-info .time {
+      background: var(--light-yellow);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      color: var(--dark-yellow);
+      font-weight: 600;
+    }
+
+    .flight-code {
+      text-align: center;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: var(--light-yellow);
+      border-radius: 10px;
+      color: var(--dark-yellow);
+    }
+
+    .flight-code p {
+      margin: 0.5rem 0;
+    }
+
+    .flight-code .code {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+
+    .flight-code .arrival-info {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .flight-code .arrival-info .date {
+      font-weight: 600;
+    }
+
+    .flight-code .arrival-info .time {
+      background: white;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    .flight-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .departure, .arrival {
+      flex: 1;
+      text-align: center;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      border: 2px solid var(--primary-yellow);
+      position: relative;
+    }
+
+    .departure::before, .arrival::before {
+      content: '';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary-yellow);
+      padding: 5px 15px;
+      border-radius: 15px;
+      font-weight: bold;
+      color: #333;
+      font-size: 0.9rem;
+    }
+
+    .departure::before {
+      content: 'DEPARTURE';
+    }
+
+    .arrival::before {
+      content: 'ARRIVAL';
+    }
+
+    .departure h3, .arrival h3 {
+      color: var(--dark-yellow);
+      margin: 0.5rem 0 1rem 0;
+      padding: 0;
+      border: none;
+      font-size: 1.3rem;
+    }
+
+    .location-details {
+      margin: 1rem 0;
+    }
+
+    .location-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .datetime-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .date-display {
+      color: var(--dark-yellow);
+      font-weight: 600;
+    }
+
+    .time-display {
+      background: var(--light-yellow);
+      padding: 0.4rem 1.2rem;
+      border-radius: 20px;
+      font-weight: 600;
+      color: var(--dark-yellow);
+    }
+
+    .flight-line {
+      flex: 1;
+      position: relative;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    .flight-line img {
+      width: 40px;
+      position: relative;
+      z-index: 2;
+      filter: brightness(0.8) sepia(1) saturate(5) hue-rotate(15deg);
+    }
+
+    .flight-line::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--primary-yellow);
+      z-index: 1;
+    }
+
+    .flight-duration {
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--light-yellow);
+      padding: 5px 15px;
+      border-radius: 15px;
+      font-size: 0.9rem;
+      color: var(--dark-yellow);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .guest-details, .payment-details, .fare-breakdown {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 15px;
+      margin-bottom: 2rem;
+      border: 1px solid var(--primary-yellow);
+      position: relative;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .section-icon {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 0 15px;
+      color: var(--dark-yellow);
+      font-size: 1.5rem;
+    }
+
+    h3 {
+      color: var(--dark-yellow);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 2px solid var(--primary-yellow);
+      text-align: center;
+      font-size: 1.4rem;
+    }
+
+    .fare-breakdown ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .fare-breakdown li {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--light-yellow);
+      transition: background-color 0.3s ease;
+    }
+
+    .fare-breakdown li:hover {
+      background-color: var(--light-yellow);
+    }
+
+    .fare-breakdown li:last-child {
+      border-bottom: none;
+    }
+
+    .action-buttons {
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+
+    .exit-btn {
+      background: var(--primary-yellow);
+      color: #333;
+      border: none;
+      padding: 1rem 2.5rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .exit-btn:hover {
+      background: var(--dark-yellow);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .decorative-corner {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border: 3px solid var(--primary-yellow);
+    }
+
+    .top-left {
+      top: -3px;
+      left: -3px;
+      border-right: none;
+      border-bottom: none;
+    }
+
+    .top-right {
+      top: -3px;
+      right: -3px;
+      border-left: none;
+      border-bottom: none;
+    }
+
+    .bottom-left {
+      bottom: -3px;
+      left: -3px;
+      border-right: none;
+      border-top: none;
+    }
+
+    .bottom-right {
+      bottom: -3px;
+      right: -3px;
+      border-left: none;
+      border-top: none;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .details-grid p {
+      margin: 0;
+      padding: 0.8rem;
+      border-bottom: 1px solid var(--light-yellow);
+      display: contents;
+    }
+
+    .details-grid strong {
+      color: var(--dark-yellow);
+      font-weight: 600;
+      padding: 0.8rem 1rem;
+      background: var(--light-yellow);
+      border-radius: 8px;
+      margin-right: 1rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .details-grid span {
+      padding: 0.8rem 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .details-value {
+      font-size: 1.1rem;
+    }
+
+    .booking-reference {
+      margin: 1.5rem auto;
+      padding: 1rem;
+      background: var(--light-yellow);
+      border: 2px solid var(--primary-yellow);
+      border-radius: 8px;
+      text-align: center;
+      max-width: 400px;
+    }
+
+    .booking-reference h3 {
+      color: var(--dark-yellow);
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .booking-reference p {
+      font-family: monospace;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--accent-blue);
+      margin: 0;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 768px) {
+      .booking-confirmation {
+        margin: 1rem;
+        padding: 1.5rem;
+      }
+
+      .flight-info {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .flight-line {
+        height: 50px;
+      }
+
+      .flight-line::before {
+        width: 3px;
+        height: 100%;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .details-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+
+      .details-grid strong {
+        margin-bottom: 0.2rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
     <div class="flight-selection">
       <header class="header">
           <div class="logo">
-            <img src="images/Logo 3.png">
+            <img src="images/Logo 3.png" alt="JMDJ Airlines Logo">
           </div>
           <nav>
             <ul id="navbar">
-              <li><a href="Home Page.html">Home</a></li> 
-              <li><a href="sign up.html">Sign Up</a></li>
-              <li><a href="login.html">Log In</a></li>
+              <li><a href="/">Home</a></li> 
+              <li><a href="/signup">Sign Up</a></li>
+              <li><a href="/login">Log In</a></li>
             </ul>
           </nav>
-        </header>
+      </header>
   
-        <div class="booking-confirmation">
+      <div class="booking-confirmation">
+          <div class="decorative-corner top-left"></div>
+          <div class="decorative-corner top-right"></div>
+          <div class="decorative-corner bottom-left"></div>
+          <div class="decorative-corner bottom-right"></div>
+
+          <div class="confirmation-header">
+            <h2>Booking Confirmation</h2>
+            <div class="booking-reference">
+                <h3>Booking Reference</h3>
+                <p><%= bookingReference %></p>
+            </div>
+          </div>
+
           <div class="flight-details">
               <div class="route">
-                  <h2>CGY - MNL</h2>
-                  <p>15 Dec 2024 <span>07:30 AM</span></p>
+                  <h2><%= depart %> - <%= arrival %></h2>
               </div>
               <div class="flight-info">
                   <div class="departure">
-                      <h3>DEPARTURE</h3>
-                      <p>Cagayan de Oro</p>
-                      <p>Laguindingan International Airport</p>
+                      <div class="location-details">
+                          <div class="location-name"><%= from %></div>
+                          <div class="datetime-info">
+                              <span class="date-display"><%= departDate %></span>
+                              <span class="time-display"><%= departTime %></span>
+                          </div>
+                      </div>
                   </div>
                   <div class="flight-line">
+                      <div class="flight-duration">Flight <%= flightCode %></div>
                       <img src="images/plane-icon.png" alt="Plane Icon">
                   </div>
                   <div class="arrival">
-                      <h3>ARRIVAL</h3>
-                      <p>Manila</p>
-                      <p>Ninoy Aquino International Airport Terminal 3</p>
+                      <div class="location-details">
+                          <div class="location-name"><%= to %></div>
+                          <div class="datetime-info">
+                              <span class="date-display"><%= arrivalDate %></span>
+                              <span class="time-display"><%= arrivalTime %></span>
+                          </div>
+                      </div>
                   </div>
-              </div>
-              <div class="flight-code">
-                  <p>JM 3013</p>
-                  <p>15 Dec 2024 <span>08:30 AM</span></p>
               </div>
           </div>
   
           <div class="guest-details">
+              <div class="section-icon">👤</div>
               <h3>Guest Details</h3>
-              <div>
-                  <p><strong>Name:</strong> Mr. Joaquin Gregory Borja</p>
-                  <p><strong>Flight:</strong> CGY ➝ MNL</p>
-                  <p><strong>Add-Ons:</strong> Travel Insurance, Baggage, Seat Selector, Transportation, Meals</p>
+              <div class="details-grid">
+                  <strong>Name</strong>
+                  <span class="details-value"><%= title %> <%= firstName %> <%= middleInitial %> <%= lastName %></span>
+                  <strong>Flight</strong>
+                  <span class="details-value"><%= depart %> ➝ <%= arrival %></span>
+                  <strong>Baggage</strong>
+                  <span class="details-value"><%= baggage %></span>
               </div>
           </div>
   
           <div class="payment-details">
+              <div class="section-icon">💳</div>
               <h3>Payment Details</h3>
-              <p><strong>Payment Method:</strong> Credit / Debit Card</p>
-              <p><strong>Date:</strong> June 22, 2024</p>
-              <p><strong>Total Payment:</strong> PHP 10,533.24</p>
-              <p><strong>Email:</strong> waks@gmail.com</p>
+              <div class="details-grid">
+                  <strong>Payment Method</strong>
+                  <span class="details-value">Credit / Debit Card</span>
+                  <strong>Date</strong>
+                  <span class="details-value"><%= currentDate %></span>
+                  <strong>Ticket Price</strong>
+                  <span class="details-value">PHP <%= ticketPrice %></span>
+                  <strong>Baggage (<%= baggage %>)</strong>
+                  <span class="details-value">PHP <%= 
+                    baggage === 'Basic' ? '800.00' : 
+                    baggage === 'Standard' ? '1,200.00' : 
+                    baggage === 'Premium' ? '2,000.00' : '0.00' 
+                  %></span>
+                  <strong>Total Payment</strong>
+                  <span class="details-value">PHP <%= 
+                    (parseFloat(ticketPrice.replace(/[^0-9.-]+/g, "")) + 
+                    (baggage === 'Basic' ? 800 : 
+                     baggage === 'Standard' ? 1200 : 
+                     baggage === 'Premium' ? 2000 : 0)
+                    ).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) 
+                  %></span>
+                  <strong>Email</strong>
+                  <span class="details-value"><%= email %></span>
+              </div>
           </div>
   
           <div class="fare-breakdown">
+              <div class="section-icon">📊</div>
               <h3>Fare Breakdown</h3>
-              <h4>Fare, Taxes, and Fees:</h4>
+              <% 
+              const basePrice = parseFloat(ticketPrice.replace(/[^0-9.-]+/g, ""));
+              const baggagePrice = baggage === 'Basic' ? 800 : 
+                                 baggage === 'Standard' ? 1200 : 
+                                 baggage === 'Premium' ? 2000 : 0;
+              const totalPrice = basePrice + baggagePrice;
+              %>
               <ul>
-                  <li><strong>Base Fare:</strong> PHP 5,176.00</li>
-                  <li><strong>Fuel Surcharge:</strong> PHP 1,026.00</li>
-                  <li><strong>VAT for Admin Fees:</strong> PHP 72.00</li>
-                  <li><strong>Administrative Fee:</strong> PHP 600.00</li>
-                  <li><strong>Aviation Security Fee:</strong> PHP 15.00</li>
-                  <li><strong>PH Value Added Tax:</strong> PHP 744.24</li>
-              </ul>
-              <h4>Add-Ons Fare, Taxes, and Fees:</h4>
-              <ul>
-                  <li><strong>Travel Insurance:</strong> PHP 500.00</li>
-                  <li><strong>Baggage:</strong> PHP 500.00</li>
-                  <li><strong>Seat Selector:</strong> PHP 500.00</li>
-                  <li><strong>Transportation:</strong> PHP 500.00</li>
-                  <li><strong>Meals:</strong> PHP 500.00</li>
+                  <li>
+                      <span><strong>Base Fare (75%)</strong></span>
+                      <span>PHP <%= (basePrice * 0.75).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></span>
+                  </li>
+                  <li>
+                      <span><strong>Travel Insurance (8%)</strong></span>
+                      <span>PHP <%= (basePrice * 0.08).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></span>
+                  </li>
+                  <li>
+                      <span><strong>Fuel Surcharge (7%)</strong></span>
+                      <span>PHP <%= (basePrice * 0.07).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></span>
+                  </li>
+                  <li>
+                      <span><strong>VAT for Admin Fees (2%)</strong></span>
+                      <span>PHP <%= (basePrice * 0.02).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></span>
+                  </li>
+                  <li>
+                      <span><strong>Administrative Fee (3%)</strong></span>
+                      <span>PHP <%= (basePrice * 0.03).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></span>
+                  </li>
+                  <li>
+                      <span><strong>Aviation Security Fee (3%)</strong></span>
+                      <span>PHP <%= (basePrice * 0.03).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></span>
+                  </li>
+                  <li>
+                      <span><strong>PH Value Added Tax (2%)</strong></span>
+                      <span>PHP <%= (basePrice * 0.02).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></span>
+                  </li>
+                  <li style="border-top: 2px solid var(--primary-yellow); margin-top: 1rem; padding-top: 1rem;">
+                      <span><strong>Baggage (<%= baggage %>)</strong></span>
+                      <span>PHP <%= baggagePrice.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></span>
+                  </li>
+                  <li style="margin-top: 1rem; font-size: 1.1rem; font-weight: bold; color: var(--dark-yellow);">
+                      <span><strong>Total</strong></span>
+                      <span>PHP <%= totalPrice.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></span>
+                  </li>
               </ul>
 
               <div class="action-buttons">
-                <button class="exit-btn" onclick="window.location.href='Home Page.html';">Return to Home Page</button>
-            </div>
-
+                <button class="exit-btn" onclick="window.location.href='/';">Return to Home Page</button>
+              </div>
           </div>
       </div>
 
-
-<footer class="footer">
-  <div class="footer-content">
-    <div class="logo">
-      <img src="images/Logo 2.png" alt="Footer Logo">
+      <footer class="footer">
+        <div class="footer-content">
+          <div class="logo">
+            <img src="images/Logo 2.png" alt="Footer Logo">
+          </div>
+          <p>
+            Address: Xavier University – Ateneo de Cagayan, 73 Corrales Ave, Cagayan de Oro, 9000 Misamis Oriental, Philippines
+          </p>
+          <p>Phone: (63+) 9664201083 or (088) 123 4567</p>
+          <p>Email: flyjmdjairlines@gmail.com</p>
+          <p>&copy; 2024, JMDJ Development – JMDJ Airlines Ticketing System</p>
+        </div>
+      </footer>
     </div>
-    <p>
-      Address: Xavier University – Ateneo de Cagayan, 73 Corrales Ave, Cagayan de Oro, 9000 Misamis Oriental, Philippines
-    </p>
-    <p>Phone: (63+) 9664201083 or (088) 123 4567</p>
-    <p>Email: flyjmdjairlines@gmail.com</p>
-    <p>&copy; 2024, JMDJ Development – JMDJ Airlines Ticketing System</p>
-  </div>
-</footer>
 </body>
 </html>

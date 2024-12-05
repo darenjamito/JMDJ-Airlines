@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - JMDJ Airlines</title>
+    <link rel="icon" href="/images/Logo 1.png" type="images/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <style>
+        .dashboard-container {
+            padding-top: 100px;
+            padding-bottom: 50px;
+            min-height: calc(100vh - 200px);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .dashboard-card h3 {
+            color: #2c2c2c;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dashboard-card h3 i {
+            color: #dba400;
+        }
+
+        .dashboard-card-content {
+            color: #666;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .action-button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: 600;
+        }
+
+        .primary-button {
+            background-color: #FFE900;
+            color: #2C2C2C;
+        }
+
+        .primary-button:hover {
+            background-color: #dba400;
+        }
+
+        .secondary-button {
+            background-color: #f0f0f0;
+            color: #2C2C2C;
+        }
+
+        .secondary-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .booking-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .booking-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.3s ease;
+        }
+
+        .booking-item:last-child {
+            border-bottom: none;
+        }
+
+        .booking-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #dba400;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .edit-profile-btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: #FFE900;
+            color: #2C2C2C;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .edit-profile-btn:hover {
+            background-color: #dba400;
+        }
+
+        .edit-profile-btn i {
+            margin-right: 0.5rem;
+        }
+
+        .welcome-section {
+            background-color: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .user-avatar {
+            width: 100px;
+            height: 100px;
+            min-width: 100px;
+            background-color: #dba400;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 50px;
+        }
+
+        .welcome-text {
+            flex-grow: 1;
+        }
+
+        .welcome-text h1 {
+            color: #2c2c2c;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .user-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .user-details p {
+            color: #666;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-details i {
+            color: #dba400;
+            width: 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal.show {
+            display: block;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+        }
+
+        .close {
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .close:hover {
+            color: #dba400;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="/images/Logo 3.png" alt="JMDJ Airlines Logo">
+        </div>
+        <nav>
+            <ul id="navbar">
+                <li><a href="/user/dashboard" class="active">Dashboard</a></li>
+                <li><a href="/user/flight-history">Flight History</a></li>
+                <li><a href="#" onclick="event.preventDefault(); showLogoutModal()">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="welcome-section">
+            <div class="welcome-header">
+                <div class="user-avatar">
+                    <i class="fa fa-user"></i>
+                </div>
+                <div class="welcome-text">
+                    <h1>Welcome, <%= user.firstName %> <%= user.lastName %>!</h1>
+                    <div class="user-details">
+                        <p><i class="fas fa-user"></i> <%= user.username %></p>
+                        <p><i class="fas fa-envelope"></i> <%= user.email %></p>
+                    </div>
+                    <a href="/user/edit-profile" class="edit-profile-btn">
+                        <i class="fas fa-user-edit"></i> Edit Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h3><i class="fas fa-plane"></i> Recent Bookings</h3>
+                <div class="dashboard-card-content">
+                    <% if (recentBookings && recentBookings.length > 0) { %>
+                        <ul class="booking-list">
+                            <% recentBookings.forEach(booking => { %>
+                                <li class="booking-item">
+                                    <strong><%= booking.flightNumber %></strong><br>
+                                    <%= booking.destination %><br>
+                                    <%= booking.date %>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    <% } else { %>
+                        <p>No recent bookings found.</p>
+                        <button class="action-button primary-button" onclick="window.location.href='/'">Book a Flight</button>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <h3><i class="fas fa-chart-line"></i> Statistics</h3>
+                <div class="dashboard-card-content">
+                    <div class="stat-value"><%= totalBookings %></div>
+                    <div class="stat-label">Total Bookings</div>
+                    <div class="stat-value"><%= totalFlights %></div>
+                    <div class="stat-label">Flights Taken</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Logout</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to logout?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="action-button secondary-button" onclick="closeModal('logoutModal')">Cancel</button>
+                <button class="action-button primary-button" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="logo">
+                <img src="/images/Logo 2.png" alt="Footer Logo">
+            </div>
+            <p>
+                Address: Xavier University – Ateneo de Cagayan, 73 Corrales Ave, Cagayan de Oro, 9000 Misamis Oriental, Philippines
+            </p>
+            <p>Phone: (63+) 9664201083 or (088) 123 4567</p>
+            <p>Email: flyjmdjairlines@gmail.com</p>
+            <p>&copy; 2024, JMDJ Development – JMDJ Airlines Ticketing System</p>
+        </div>
+    </footer>
+
+    <script>
+        function showLogoutModal() {
+            const modal = document.getElementById('logoutModal');
+            modal.classList.add('show');
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('show');
+        }
+
+        function confirmLogout() {
+            window.location.href = '/logout';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('logoutModal');
+            if (event.target === modal) {
+                closeModal('logoutModal');
+            }
+        }
+    </script>
+</body>
+</html>

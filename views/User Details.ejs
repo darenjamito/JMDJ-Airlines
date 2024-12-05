@@ -17,9 +17,9 @@
         </div>
         <nav>
           <ul id="navbar">
-            <li><a href="Home Page.html">Home</a></li> 
-            <li><a href="sign up.html">Sign Up</a></li>
-            <li><a href="login.html">Log In</a></li>
+            <li><a href="/">Home</a></li> 
+            <li><a href="/signup">Sign Up</a></li>
+            <li><a href="/login">Log In</a></li>
           </ul>
         </nav>
       </header>
@@ -119,6 +119,81 @@
     </div>
   </footer>
   </div>
+  <script>
+    document.querySelector('.exit-btn').addEventListener('click', function() {
+      const currentUrl = new URL(window.location.href);
+      const params = new URLSearchParams();
+
+      params.set('from', currentUrl.searchParams.get('from'));
+      params.set('to', currentUrl.searchParams.get('to'));
+      params.set('flightCode', currentUrl.searchParams.get('flightCode'));
+      params.set('depart', currentUrl.searchParams.get('depart'));
+      params.set('departDate', currentUrl.searchParams.get('departDate'));
+      params.set('departTime', currentUrl.searchParams.get('departTime'));
+      params.set('arrival', currentUrl.searchParams.get('arrival'));
+      params.set('arrivalDate', currentUrl.searchParams.get('arrivalDate'));
+      params.set('arrivalTime', currentUrl.searchParams.get('arrivalTime'));
+      params.set('flightDuration', currentUrl.searchParams.get('flightDuration'));
+      params.set('ticketPrice', currentUrl.searchParams.get('ticketPrice'));
+      params.set('seat', currentUrl.searchParams.get('seat'));
+
+      window.location.href = `/baggage-selection?${params.toString()}`;
+    });
+
+    // Add continue button functionality
+    document.querySelector('.continue-btn').addEventListener('click', function() {
+      // Get all required form fields
+      const title = document.getElementById('title').value;
+      const firstName = document.getElementById('first-name').value;
+      const middleInitial = document.getElementById('middle-initial').value;
+      const lastName = document.getElementById('last-name').value;
+      const nationality = document.getElementById('nationality').value;
+      const birthdate = document.getElementById('birthdate').value;
+      const contactNumber = document.getElementById('contact-number').value;
+      const email = document.getElementById('email').value;
+
+      // Check if all fields are filled
+      if (title && firstName && middleInitial && lastName && nationality && 
+          birthdate && contactNumber && email) {
+        
+        // Get current URL parameters
+        const currentUrl = new URL(window.location.href);
+        const params = new URLSearchParams();
+
+        // Preserve existing parameters
+        params.set('from', currentUrl.searchParams.get('from'));
+        params.set('to', currentUrl.searchParams.get('to'));
+        params.set('flightCode', currentUrl.searchParams.get('flightCode'));
+        params.set('depart', currentUrl.searchParams.get('depart'));
+        params.set('departDate', currentUrl.searchParams.get('departDate'));
+        params.set('departTime', currentUrl.searchParams.get('departTime'));
+        params.set('arrival', currentUrl.searchParams.get('arrival'));
+        params.set('arrivalDate', currentUrl.searchParams.get('arrivalDate'));
+        params.set('arrivalTime', currentUrl.searchParams.get('arrivalTime'));
+        params.set('flightDuration', currentUrl.searchParams.get('flightDuration'));
+        params.set('ticketPrice', currentUrl.searchParams.get('ticketPrice'));
+        params.set('seat', currentUrl.searchParams.get('seat'));
+        params.set('baggage', currentUrl.searchParams.get('baggage'));
+
+        // Add user details to parameters
+        params.set('title', title);
+        params.set('firstName', firstName);
+        params.set('middleInitial', middleInitial);
+        params.set('lastName', lastName);
+        params.set('nationality', nationality);
+        params.set('birthdate', birthdate);
+        params.set('contactNumber', contactNumber);
+        params.set('email', email);
+
+        // Redirect to payment page with all parameters
+        window.location.href = `/payment?${params.toString()}`;
+      } else {
+        this.setCustomValidity('Please fill out all the required fields before continuing.');
+        this.reportValidity();
+        this.setCustomValidity('');
+      }
+    });
+  </script>
   </body>
   </html>
   

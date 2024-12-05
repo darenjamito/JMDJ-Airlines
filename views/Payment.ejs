@@ -17,24 +17,24 @@
         </div>
         <nav>
           <ul id="navbar">
-            <li><a href="Home Page.html">Home</a></li> 
-            <li><a href="sign up.html">Sign Up</a></li>
-            <li><a href="login.html">Log In</a></li>
+            <li><a href="/">Home</a></li> 
+            <li><a href="/signup">Sign Up</a></li>
+            <li><a href="/login">Log In</a></li>
           </ul>
         </nav>
       </header>
 
       <h2 class="payment-title">Payment</h2>
-      <div class="payment-form">
+      <form id="payment-form" class="payment-form" onsubmit="handleSubmit(event)">
         <div class="card space icon-relative">
           <label class="label">Card Holder</label>
-          <input type="text" class="input" placeholder="Full Name">
+          <input type="text" class="input" placeholder="Full Name" required>
           <i class="fas fa-user"></i>
         </div>
 
         <div class="card space icon-relative">
           <label class="label">Card Number</label>
-          <input type="text" id="card-number" class="input" data-mask="0000 0000 0000 0000" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" oninput="formatCardNumber(this)">
+          <input type="text" id="card-number" class="input" data-mask="0000 0000 0000 0000" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" oninput="formatCardNumber(this)" required>
           <i class="far fa-credit-card"></i>
           <!-- Place for the Mastercard logo -->
           <img id="mastercard-logo" src="images/Mastercard-logo.png" alt="Mastercard" style="display:none; width: 30px; position: absolute; right: 10px; top: 65%; transform: translateY(-50%);">
@@ -48,18 +48,18 @@
         <div class="card-grp space">
           <div class="card-item icon-relative">
             <label class="label">Expiry Date</label>
-            <input type="text" name="expiry-date" class="input" placeholder="00 / 00">
+            <input type="text" name="expiry-date" class="input" placeholder="MM / YY" required>
             <i class="far fa-calendar-alt"></i>
           </div>
           <div class="card-item icon-relative">
             <label class="label">CVC</label>
-            <input type="text" class="input" data-mask="000" placeholder="000">
+            <input type="text" class="input" data-mask="000" placeholder="000" required>
             <i class="fas fa-lock"></i>
           </div>
         </div>
 
-        <div class="btn">Pay</div>
-      </div>
+        <button type="submit" class="btn">Pay</button>
+      </form>
 
       <footer class="footer">
         <div class="footer-content">
@@ -117,6 +117,34 @@
         input.value = cardNumber;
 
         input.dispatchEvent(new Event('input'));
+        }
+        
+        function handleSubmit(event) {
+          event.preventDefault();
+          
+          // Get all form inputs
+          const cardHolder = document.querySelector('input[placeholder="Full Name"]').value;
+          const cardNumber = document.querySelector('#card-number').value;
+          const expiryDate = document.querySelector('input[name="expiry-date"]').value;
+          const cvc = document.querySelector('input[placeholder="000"]').value;
+          
+          // Basic form validation
+          if (!cardHolder || !cardNumber || !expiryDate || !cvc) {
+              alert('Please fill in all fields');
+              return;
+          }
+          
+          // Get current URL parameters
+          const currentUrl= new URLSearchParams(window.location.search);
+          
+          // Add payment details to URL parameters (you might want to exclude sensitive data in production)
+          currentUrl.append('cardHolder', cardHolder);
+          currentUrl.append('cardNumber', cardNumber);
+          currentUrl.append('expiryDate', expiryDate);
+          currentUrl.append('cvc', cvc);
+          
+          // Redirect to booking confirmation with all parameters
+          window.location.href = `/booking-confirmation?${currentUrl.toString()}`;
         }
       </script>
   </body>

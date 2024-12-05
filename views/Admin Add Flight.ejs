@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JMDJ Airlines - Add Flight</title>
+    <link rel="icon" href="/images/Logo 1.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/css/admin-modal.css">
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <style>
+        .invalid-input {
+            border: 2px solid #ff4444 !important;
+        }
+        .invalid-input:focus {
+            outline-color: #ff4444 !important;
+        }
+        .departure-container, .date-container, 
+        .departure-time-container, .arrival-time-container,
+        .flight-no-container, .price-container {
+            position: relative;
+            margin-bottom: 24px;
+        }
+        .error-message {
+            position: absolute;
+            left: 0;
+            bottom: -20px;
+            color: #ff4444;
+            font-size: 12px;
+            display: none;
+        }
+        .error-message.visible {
+            display: block;
+        }
+        .vertical-container {
+            gap: 32px;
+        }
+        .departure-label, .date-label, 
+        .departure-time-label, .arrival-time-label,
+        .flight-no-label, .price-label {
+            margin-bottom: 8px;
+        }
+        .departure-selection-select,
+        .date-input,
+        .departure-time-input,
+        .arrival-time-input,
+        .flight-no-input,
+        .price-input {
+            margin-bottom: 0;
+        }
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 15px;
+        }
+        .modal-footer button {
+            padding: 8px 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            min-width: 100px;
+        }
+        .modal-footer .cancel-btn {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        .modal-footer .cancel-btn:hover {
+            background-color: #d0d0d0;
+        }
+        .modal-footer .confirm-btn {
+            background-color: #FFD700;
+            color: #333;
+            font-weight: 600;
+        }
+        .modal-footer .confirm-btn:hover {
+            background-color: #FFC700;
+        }
+        .flight-details {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .flight-details p {
+            margin: 8px 0;
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+        .flight-details strong {
+            min-width: 150px;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+        .flight-details span {
+            flex-grow: 1;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            margin: auto;
+            position: relative;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 {
+            margin: 0;
+            color: #333;
+        }
+        .modal-body {
+            padding: 20px;
+        }
+        .modal .close {
+            font-size: 24px;
+            font-weight: bold;
+            color: #666;
+            cursor: pointer;
+            padding: 5px;
+            line-height: 1;
+        }
+        .modal .close:hover {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="/images/Logo 3.png" alt="JMDJ Airlines Logo">
+        </div>
+        <nav>
+            <ul id="navbar">
+                <li><a href="/admin/dashboard">Dashboard</a></li>
+                <li><a href="/admin/flights">List of Flights</a></li>
+                <li><a href="/admin/bookings">Bookings</a></li>
+                <li><a href="/admin/users">Users</a></li>
+                <li><a href="#" onclick="event.preventDefault(); showLogoutModal()">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="admin-container">
+        <div class="add-flight-container">
+            <div class="vertical-container">
+                <div class="departure-container">
+                    <p class="departure-label">Departure</p>
+                    <select name="departure" id="departure" class="departure-selection-select">
+                        <option value="" disabled selected hidden>Select Origin</option>
+                        <option value="Cagayan de Oro">Cagayan de Oro (Local)</option>
+                        <option value="Cebu">Cebu (Local)</option>
+                        <option value="Davao">Davao (Local)</option>
+                        <option value="Manila">Manila (Local)</option>
+                    </select>
+                    <span class="error-message" id="departure-error">Please select a departure location</span>
+                </div>    
+                <div class="date-container">
+                    <p class="date-label">Departure Date</p>
+                    <input class="date-input" type="date" name="departureDate">
+                    <span class="error-message" id="departureDate-error">Please select a departure date</span>
+                </div>
+                <div class="departure-time-container">
+                    <p class="departure-time-label">Departure Time</p>
+                    <input class="departure-time-input" type="time" name="departureTime">
+                    <span class="error-message" id="departureTime-error">Please select a departure time</span>
+                </div>
+            </div>
+
+            <div class="vertical-container">
+                <div class="departure-container">
+                    <p class="departure-label">Arrival</p>
+                    <select name="arrival" id="arrival" class="departure-selection-select">
+                        <option value="" disabled selected hidden>Select Destination</option>
+                        <option value="Cagayan de Oro">Cagayan de Oro (Local)</option>
+                        <option value="Cebu">Cebu (Local)</option>
+                        <option value="Davao">Davao (Local)</option>
+                        <option value="Manila">Manila (Local)</option>
+                        <option value="Tokyo">Japan (International)</option>
+                        <option value="Singapore">Singapore (International)</option>
+                        <option value="Incheon">South Korea (International)</option>
+                        <option value="London">United Kingdom (International)</option>
+                        <option value="Los Angeles">United States (International)</option>
+                    </select>
+                    <span class="error-message" id="arrival-error">Please select an arrival location</span>
+                </div>    
+                <div class="date-container">
+                    <p class="date-label">Arrival Date</p>
+                    <input class="date-input" type="date" name="arrivalDate">
+                    <span class="error-message" id="arrivalDate-error">Please select an arrival date</span>
+                </div>
+                <div class="arrival-time-container">
+                    <p class="arrival-time-label">Arrival Time</p>
+                    <input class="arrival-time-input" type="time" name="arrivalTime">
+                    <span class="error-message" id="arrivalTime-error">Please select an arrival time</span>
+                </div>
+            </div>
+
+            <div class="vertical-container">
+                <div class="flight-no-container">
+                    <p class="flight-no-label">Flight Code</p>
+                    <input class="flight-no-input" type="text" name="flightNumber" placeholder="JM XXXX">
+                    <span class="error-message" id="flightNumber-error">Flight number must start with JM</span>
+                </div>
+                <div class="price-container">
+                    <p class="price-label">Price (PHP)</p>
+                    <input class="price-input" type="number" name="price" placeholder="00.00" min="0" step="0.01">
+                    <span class="error-message" id="price-error">Please enter a valid price</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="exit-btn" onclick="window.location.href='/admin/dashboard'">Back</button>
+            <button class="add-flight-btn" onclick="handleAddFlight()">Add Flight</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="logo">
+                <img src="/images/Logo 2.png" alt="Footer Logo">
+            </div>
+            <p>Address: Xavier University – Ateneo de Cagayan, 73 Corrales Ave, Cagayan de Oro, 9000 Misamis Oriental, Philippines</p>
+            <p>Phone: (63+) 9664201083 or (088) 123 4567</p>
+            <p>Email: flyjmdjairlines@gmail.com</p>
+            <p> 2024, JMDJ Development – JMDJ Airlines Ticketing System</p>
+        </div>
+    </footer>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Logout</h3>
+                <span class="close" onclick="closeModal('logoutModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to logout?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeModal('logoutModal')">Cancel</button>
+                <button class="confirm-delete-btn" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Flight Confirmation Modal -->
+    <div id="addFlightModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Add Flight</h3>
+                <span class="close" onclick="closeModal('addFlightModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to add this flight?</p>
+                <div class="flight-details">
+                    <p><strong>Flight Code:</strong><span id="confirm-flight-number"></span></p>
+                    <p><strong>Departure:</strong><span id="confirm-departure"></span></p>
+                    <p><strong>Departure Date:</strong><span id="confirm-departure-date"></span></p>
+                    <p><strong>Departure Time:</strong><span id="confirm-departure-time"></span></p>
+                    <p><strong>Arrival:</strong><span id="confirm-arrival"></span></p>
+                    <p><strong>Arrival Date:</strong><span id="confirm-arrival-date"></span></p>
+                    <p><strong>Arrival Time:</strong><span id="confirm-arrival-time"></span></p>
+                    <p><strong>Price:</strong><span>PHP <span id="confirm-price"></span></span></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeModal('addFlightModal')">Cancel</button>
+                <button class="confirm-btn" onclick="confirmAddFlight()">Add Flight</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function handleLogout(event) {
+            event.preventDefault();
+            try {
+                const response = await fetch('/api/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    sessionStorage.clear();
+                    window.location.href = '/';
+                } else {
+                    console.error('Logout failed');
+                }
+            } catch (error) {
+                console.error('Error during logout:', error);
+            }
+        }
+
+        function resetValidation() {
+            const inputs = document.querySelectorAll('input, select');
+            const errorMessages = document.querySelectorAll('.error-message');
+            inputs.forEach(input => input.classList.remove('invalid-input'));
+            errorMessages.forEach(msg => msg.classList.remove('visible'));
+        }
+
+        function validateField(element, condition, errorMessage = '') {
+            const errorElement = document.getElementById(`${element.name}-error`);
+            if (!condition) {
+                element.classList.add('invalid-input');
+                if (errorElement) {
+                    errorElement.textContent = errorMessage;
+                    errorElement.classList.add('visible');
+                }
+                return false;
+            }
+            element.classList.remove('invalid-input');
+            if (errorElement) {
+                errorElement.classList.remove('visible');
+            }
+            return true;
+        }
+
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('show');
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('show');
+        }
+
+        function showLogoutModal() {
+            showModal('logoutModal');
+        }
+
+        async function confirmLogout() {
+            closeModal('logoutModal');
+            window.location.href = '/logout';
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const weekday = date.toLocaleDateString('en-US', { weekday: 'short' });
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = date.toLocaleDateString('en-US', { month: 'short' });
+            return `${weekday}, ${day} ${month}`;
+        }
+
+        function formatTime(timeStr) {
+            const [hours, minutes] = timeStr.split(':');
+            const date = new Date();
+            date.setHours(hours);
+            date.setMinutes(minutes);
+            date.setSeconds(0); // Set seconds to 0
+            
+            const formattedTime = date.toLocaleTimeString('en-US', { 
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+            
+            // Add ":00" for seconds
+            return formattedTime.replace(/(\d{1,2}:\d{2})/, '$1:00');
+        }
+
+        async function handleAddFlight() {
+            try {
+                resetValidation();
+
+                // Get form values
+                const flightNumberInput = document.querySelector('.flight-no-input');
+                const departureInput = document.querySelector('#departure');
+                const departureTimeInput = document.querySelector('.departure-time-input');
+                const arrivalInput = document.querySelector('#arrival');
+                const arrivalTimeInput = document.querySelector('.arrival-time-input');
+                const departureDateInput = document.querySelector('.date-input[name="departureDate"]');
+                const arrivalDateInput = document.querySelector('.date-input[name="arrivalDate"]');
+                const priceInput = document.querySelector('.price-input');
+
+                const flightNumber = flightNumberInput.value;
+                const departure = departureInput.value;
+                const departureTime = departureTimeInput.value;
+                const arrivalLocation = arrivalInput.value;
+                const arrivalTime = arrivalTimeInput.value;
+                const departureDate = departureDateInput.value;
+                const arrivalDate = arrivalDateInput.value;
+                const price = priceInput.value;
+
+                // Validate each field
+                let isValid = true;
+
+                isValid = validateField(flightNumberInput, flightNumber, 'Please enter a flight number') && isValid;
+                isValid = validateField(flightNumberInput, flightNumber.startsWith('JM'), 'Flight number must start with JM') && isValid;
+                isValid = validateField(departureInput, departure, 'Please select a departure location') && isValid;
+                isValid = validateField(departureTimeInput, departureTime, 'Please select a departure time') && isValid;
+                isValid = validateField(arrivalInput, arrivalLocation, 'Please select an arrival location') && isValid;
+                isValid = validateField(arrivalTimeInput, arrivalTime, 'Please select an arrival time') && isValid;
+                isValid = validateField(departureDateInput, departureDate, 'Please select a departure date') && isValid;
+                isValid = validateField(arrivalDateInput, arrivalDate, 'Please select an arrival date') && isValid;
+                isValid = validateField(priceInput, price && price > 0, 'Please enter a valid price') && isValid;
+
+                // Validate departure and arrival are different
+                if (departure === arrivalLocation) {
+                    departureInput.classList.add('invalid-input');
+                    arrivalInput.classList.add('invalid-input');
+                    const departureError = document.getElementById('departure-error');
+                    const arrivalError = document.getElementById('arrival-error');
+                    departureError.textContent = 'Departure and arrival cannot be the same';
+                    arrivalError.textContent = 'Departure and arrival cannot be the same';
+                    departureError.classList.add('visible');
+                    arrivalError.classList.add('visible');
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    return;
+                }
+
+                // Format dates and times for display
+                const formattedDepartureDate = formatDate(departureDate);
+                const formattedDepartureTime = formatTime(departureTime);
+                const formattedArrivalDate = formatDate(arrivalDate);
+                const formattedArrivalTime = formatTime(arrivalTime);
+                const formattedPrice = parseFloat(price).toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+
+                // Update confirmation modal with flight details
+                document.getElementById('confirm-flight-number').textContent = flightNumber;
+                document.getElementById('confirm-departure').textContent = departure;
+                document.getElementById('confirm-departure-date').textContent = formattedDepartureDate;
+                document.getElementById('confirm-departure-time').textContent = formattedDepartureTime;
+                document.getElementById('confirm-arrival').textContent = arrivalLocation;
+                document.getElementById('confirm-arrival-date').textContent = formattedArrivalDate;
+                document.getElementById('confirm-arrival-time').textContent = formattedArrivalTime;
+                document.getElementById('confirm-price').textContent = formattedPrice;
+
+                // Show confirmation modal
+                showModal('addFlightModal');
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function confirmAddFlight() {
+            try {
+                const flightNumber = document.querySelector('.flight-no-input').value;
+                const departure = document.querySelector('#departure').value;
+                const departureTime = document.querySelector('.departure-time-input').value;
+                const arrivalLocation = document.querySelector('#arrival').value;
+                const arrivalTime = document.querySelector('.arrival-time-input').value;
+                const departureDate = document.querySelector('.date-input[name="departureDate"]').value;
+                const arrivalDate = document.querySelector('.date-input[name="arrivalDate"]').value;
+                const price = document.querySelector('.price-input').value;
+
+                // Validate dates and times
+                const departDateTime = new Date(`${departureDate}T${departureTime}`);
+                const arrivalDateTime = new Date(`${arrivalDate}T${arrivalTime}`);
+                
+                if (isNaN(departDateTime.getTime()) || isNaN(arrivalDateTime.getTime())) {
+                    throw new Error('Invalid date or time format');
+                }
+
+                if (arrivalDateTime <= departDateTime) {
+                    alert('Arrival date/time must be after departure date/time');
+                    return;
+                }
+
+                // Calculate flight duration
+                const durationMs = arrivalDateTime - departDateTime;
+                const hours = Math.floor(durationMs / (1000 * 60 * 60));
+                const minutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
+                const duration = `${hours}h ${minutes}m`;
+
+                // Format dates and times
+                const formattedDepartureDate = formatDate(departureDate);
+                const formattedDepartureTime = formatTime(departureTime);
+                const formattedArrivalDate = formatDate(arrivalDate);
+                const formattedArrivalTime = formatTime(arrivalTime);
+
+                // Format price
+                const formattedPrice = `PHP ${parseFloat(price).toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                })}`;
+
+                const response = await fetch('/api/flights/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        Flight_Code: flightNumber,
+                        Depart: departure,
+                        Depart_Date: formattedDepartureDate,
+                        Depart_Time: formattedDepartureTime,
+                        Arrival: arrivalLocation,
+                        Arrival_Date: formattedArrivalDate,
+                        Arrival_Time: formattedArrivalTime,
+                        Flight_Duration: duration,
+                        Ticket_Price: formattedPrice
+                    })
+                });
+
+                if (!response.ok) {
+                    const data = await response.json();
+                    throw new Error(data.message || 'Failed to add flight');
+                }
+
+                await response.json();
+                window.location.href = '/admin/flights';
+            } catch (error) {
+                console.error('Error adding flight:', error);
+                alert(error.message || 'Failed to add flight. Please try again.');
+                closeModal('addFlightModal');
+            }
+        }
+    </script>
+
+    <script src="/js/admin-modal.js"></script>
+</body>
+</html>

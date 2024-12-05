@@ -17,9 +17,9 @@
         </div>
         <nav>
           <ul id="navbar">
-            <li><a href="Home Page.html">Home</a></li> 
-            <li><a href="sign up.html">Sign Up</a></li>
-            <li><a href="login.html">Log In</a></li>
+            <li><a href="/">Home</a></li> 
+            <li><a href="/signup">Sign Up</a></li>
+            <li><a href="/login">Log In</a></li>
           </ul>
         </nav>
       </header>
@@ -32,19 +32,19 @@
             <!-- Basic Package -->
             <div class="baggage-selection-package">
                 <img src="images/Basic.png" alt="Basic Package">
-                <a href="#" class="baggage-selection-btn baggage-selection-btn-no-check-in">No Check-In</a>
+                <a href="/user-details?from=<%= from %>&to=<%= to %>&flightCode=<%= flightCode %>&depart=<%= depart %>&departDate=<%= departDate %>&departTime=<%= departTime %>&arrival=<%= arrival %>&arrivalDate=<%= arrivalDate %>&arrivalTime=<%= arrivalTime %>&flightDuration=<%= flightDuration %>&ticketPrice=<%= ticketPrice %>&seat=<%= seat %>&baggage=Basic" class="baggage-selection-btn baggage-selection-btn-no-check-in">No Check-In</a>
             </div>
 
             <!-- Standard Package -->
             <div class="baggage-selection-package">
                 <img src="images/Standard.png" alt="Standard Package">
-                <a href="#" class="baggage-selection-btn baggage-selection-btn-add">Add</a>
+                <a href="/user-details?from=<%= from %>&to=<%= to %>&flightCode=<%= flightCode %>&depart=<%= depart %>&departDate=<%= departDate %>&departTime=<%= departTime %>&arrival=<%= arrival %>&arrivalDate=<%= arrivalDate %>&arrivalTime=<%= arrivalTime %>&flightDuration=<%= flightDuration %>&ticketPrice=<%= ticketPrice %>&seat=<%= seat %>&baggage=Standard" class="baggage-selection-btn baggage-selection-btn-add">Add</a>
             </div>
 
             <!-- Premium Package -->
             <div class="baggage-selection-package">
                 <img src="images/Premium.png" alt="Premium Package">
-                <a href="#" class="baggage-selection-btn baggage-selection-btn-add">Add</a>
+                <a href="/user-details?from=<%= from %>&to=<%= to %>&flightCode=<%= flightCode %>&depart=<%= depart %>&departDate=<%= departDate %>&departTime=<%= departTime %>&arrival=<%= arrival %>&arrivalDate=<%= arrivalDate %>&arrivalTime=<%= arrivalTime %>&flightDuration=<%= flightDuration %>&ticketPrice=<%= ticketPrice %>&seat=<%= seat %>&baggage=Premium" class="baggage-selection-btn baggage-selection-btn-add">Add</a>
             </div>
         </div>
     </div>

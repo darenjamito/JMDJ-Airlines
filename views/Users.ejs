@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JMDJ Airlines - Users</title>
+    <link rel="icon" href="/images/Logo 1.png" type="images/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/css/admin-modal.css">
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <style>
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+
+        .confirm-delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .confirm-delete-btn:hover {
+            background-color: #c82333;
+        }
+
+        /* Modal footer button styles */
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            gap: 10px;
+        }
+
+        .modal-footer button {
+            flex: 1;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            border: none;
+        }
+
+        .cancel-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .cancel-btn:hover {
+            background-color: #5a6268;
+        }
+
+        .confirm-btn {
+            background-color: #FFE900;
+            color: #2C2C2C;
+        }
+
+        .confirm-btn:hover {
+            background-color: #dba400;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/images/Logo 3.png" alt="JMDJ Airlines Logo">
+        </a>
+        <nav>
+            <ul id="navbar">
+                <li><a href="/admin/dashboard">Dashboard</a></li>
+                <li><a href="/admin/flights">List of Flights</a></li>
+                <li><a href="/admin/bookings">Bookings</a></li>
+                <li><a href="/admin/users" class="active">Users</a></li>
+                <li><a href="#" onclick="event.preventDefault(); showLogoutModal()">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1 class="admin-title">User List</h1>
+        </div>
+
+        <!-- Users Table Section -->
+        <div class="admin-section">
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (users && users.length > 0) { %>
+                            <% users.forEach(user => { %>
+                                <tr>
+                                    <td><%= user._id %></td>
+                                    <td><%= user.firstName + ' ' + user.lastName %></td>
+                                    <td><%= user.email %></td>
+                                    <td>
+                                        <button class="edit-btn" onclick="showEditModal('<%= user._id %>')">Edit</button>
+                                        <button class="delete-btn" onclick="showDeleteModal('<%= user._id %>')">Delete</button>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        <% } else { %>
+                            <tr>
+                                <td colspan="4" style="text-align: center;">No users found</td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit User</h3>
+                <span class="close" onclick="closeEditModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="editUserForm">
+                    <div class="form-group">
+                        <label for="editFirstName">First Name</label>
+                        <input type="text" id="editFirstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editLastName">Last Name</label>
+                        <input type="text" id="editLastName" name="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmail">Email</label>
+                        <input type="email" id="editEmail" name="email" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeEditModal()">Cancel</button>
+                <button class="confirm-btn" onclick="handleEditUser()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete User Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Delete</h3>
+                <span class="close" onclick="closeDeleteModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this user?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
+                <button class="confirm-delete-btn" onclick="handleDeleteUser()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="logo">
+                <img src="/images/Logo 2.png" alt="Footer Logo">
+            </div>
+            <p>Address: Xavier University – Ateneo de Cagayan, 73 Corrales Ave, Cagayan de Oro, 9000 Misamis Oriental, Philippines</p>
+            <p>Phone: (63+) 9664201083 or (088) 123 4567</p>
+            <p>Email: flyjmdjairlines@gmail.com</p>
+            <p> 2024, JMDJ Development – JMDJ Airlines Ticketing System</p>
+        </div>
+    </footer>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Logout</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to logout?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeModal('logoutModal')">Cancel</button>
+                <button class="confirm-delete-btn" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function handleLogout(event) {
+            event.preventDefault();
+            try {
+                const response = await fetch('/api/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // Clear any session storage data
+                    sessionStorage.clear();
+                    // Redirect to home page
+                    window.location.href = '/';
+                } else {
+                    console.error('Logout failed');
+                }
+            } catch (error) {
+                console.error('Error during logout:', error);
+            }
+        }
+    </script>
+
+    <script>
+        let userToDelete = null;
+        let userToEdit = null;
+
+        function showEditModal(userId) {
+            userToEdit = userId;
+            const modal = document.getElementById('editModal');
+            
+            // Fetch user data
+            fetch(`/api/users/${userId}`)
+                .then(response => response.json())
+                .then(user => {
+                    // Populate form fields
+                    document.getElementById('editFirstName').value = user.firstName;
+                    document.getElementById('editLastName').value = user.lastName;
+                    document.getElementById('editEmail').value = user.email;
+                    
+                    // Show modal
+                    modal.classList.add('show');
+                })
+                .catch(error => {
+                    console.error('Error fetching user data:', error);
+                    alert('Failed to load user data. Please try again.');
+                });
+        }
+
+        function closeEditModal() {
+            const modal = document.getElementById('editModal');
+            modal.classList.remove('show');
+            userToEdit = null;
+        }
+
+        function showDeleteModal(userId) {
+            userToDelete = userId;
+            const modal = document.getElementById('deleteModal');
+            modal.classList.add('show');
+        }
+
+        function closeDeleteModal() {
+            const modal = document.getElementById('deleteModal');
+            modal.classList.remove('show');
+            userToDelete = null;
+        }
+
+        async function handleEditUser() {
+            if (!userToEdit) return;
+
+            const userData = {
+                firstName: document.getElementById('editFirstName').value,
+                lastName: document.getElementById('editLastName').value,
+                email: document.getElementById('editEmail').value
+            };
+
+            try {
+                const response = await fetch(`/api/users/${userToEdit}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                });
+
+                if (response.ok) {
+                    closeEditModal();
+                    window.location.reload();
+                } else {
+                    const data = await response.json();
+                    if (data.error === 'email_exists') {
+                        alert('Email already exists. Please use a different email.');
+                    } else {
+                        throw new Error('Failed to update user');
+                    }
+                }
+            } catch (error) {
+                console.error('Error updating user:', error);
+                alert('Failed to update user. Please try again.');
+            }
+        }
+
+        async function handleDeleteUser() {
+            if (!userToDelete) return;
+
+            try {
+                const response = await fetch(`/api/users/${userToDelete}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    closeDeleteModal();
+                    window.location.reload();
+                } else {
+                    throw new Error('Failed to delete user');
+                }
+            } catch (error) {
+                console.error('Error deleting user:', error);
+                alert('Failed to delete user. Please try again.');
+            }
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const editModal = document.getElementById('editModal');
+            const deleteModal = document.getElementById('deleteModal');
+            const logoutModal = document.getElementById('logoutModal');
+            
+            if (event.target === editModal) {
+                closeEditModal();
+            } else if (event.target === deleteModal) {
+                closeDeleteModal();
+            } else if (event.target === logoutModal) {
+                closeModal('logoutModal');
+            }
+        }
+
+        function showLogoutModal() {
+            const modal = document.getElementById('logoutModal');
+            modal.classList.add('show');
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('show');
+        }
+
+        function confirmLogout() {
+            window.location.href = '/api/logout';
+        }
+    </script>
+
+    <script src="/js/admin-modal.js"></script>
+</body>
+</html>

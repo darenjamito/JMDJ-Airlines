@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JMDJ Airlines - Admin Dashboard</title>
+    <link rel="icon" href="/images/Logo 1.png" type="images/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/css/admin-modal.css">
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/images/Logo 3.png" alt="JMDJ Airlines Logo">
+        </a>
+        <nav>
+            <ul id="navbar">
+                <li><a href="/admin/dashboard" class="active">Dashboard</a></li>
+                <li><a href="/admin/flights">List of Flights</a></li>
+                <li><a href="/admin/bookings">Bookings</a></li>
+                <li><a href="/admin/users">Users</a></li>
+                <li><a href="#" onclick="event.preventDefault(); showLogoutModal()">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1 class="admin-title">Admin Dashboard</h1>
+            <div class="admin-actions">
+                <button class="admin-btn admin-btn-primary" onclick="window.location.href='/admin/flights/add'">
+                    Add New Flight
+                </button>
+            </div>
+        </div>
+
+        <div class="admin-grid">
+            <!-- Statistics Cards -->
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h3 class="admin-card-title">Total Flights</h3>
+                    <i class="fas fa-plane"></i>
+                </div>
+                <div class="admin-card-content">
+                    <h2><%= totalFlights %></h2>
+                    <p>Active Flights</p>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h3 class="admin-card-title">Total Bookings</h3>
+                    <i class="fas fa-ticket-alt"></i>
+                </div>
+                <div class="admin-card-content">
+                    <h2><%= totalBookings %></h2>
+                    <p>All Time</p>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h3 class="admin-card-title">Revenue</h3>
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="admin-card-content">
+                    <h2>PHP <%= Number(totalRevenue).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %></h2>
+                    <p>All Time</p>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h3 class="admin-card-title">Users</h3>
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="admin-card-content">
+                    <h2><%= totalUsers %></h2>
+                    <p>Registered Users</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flight Search Section -->
+        <div class="admin-section" id="search-flights">
+            <h2>Search Flights</h2>
+            <form class="admin-form" action="/admin/flights" method="GET">
+                <div class="admin-form-group">
+                    <label for="from">From</label>
+                    <select id="from" name="from" required class="admin-flight-selection">
+                        <option value="" disabled selected>Select Origin</option>
+                        <option value="Cagayan de Oro">Cagayan de Oro (Local)</option>
+                        <option value="Cebu">Cebu (Local)</option>
+                        <option value="Davao">Davao (Local)</option>
+                        <option value="Manila">Manila (Local)</option>
+                    </select>
+                </div>
+                <div class="admin-form-group">
+                    <label for="to">To</label>
+                    <select id="to" name="to" required class="admin-flight-selection">
+                        <option value="" disabled selected>Select Destination</option>
+                        <option value="Cagayan de Oro">Cagayan de Oro (Local)</option>
+                        <option value="Cebu">Cebu (Local)</option>
+                        <option value="Davao">Davao (Local)</option>
+                        <option value="Manila">Manila (Local)</option>
+                        <option value="Tokyo">Japan (International)</option>
+                        <option value="Singapore">Singapore (International)</option>
+                        <option value="Incheon">South Korea (International)</option>
+                        <option value="London">United Kingdom (International)</option>
+                        <option value="Los Angeles">United States (International)</option>
+                    </select>
+                </div>
+                <div class="admin-form-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" name="date" required class="admin-flight-selection">
+                    <input type="hidden" id="departDate" name="departDate">
+                </div>
+                <div class="admin-actions">
+                    <button type="submit" class="admin-btn admin-btn-primary">Search Flight</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Recent Bookings Section -->
+        <div class="admin-section" id="recent-bookings">
+            <h2>Recent Bookings</h2>
+            <div class="bookings-table-container">
+                <table class="bookings-table">
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Passenger Name</th>
+                            <th>Flight Details</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (recentBookings && recentBookings.length > 0) { %>
+                            <% recentBookings.forEach(booking => { %>
+                                <tr>
+                                    <td><%= booking.bookingId %></td>
+                                    <td><%= booking.passengerName %></td>
+                                    <td><%= booking.flightDetails %></td>
+                                    <td><span class="status-<%= booking.status.toLowerCase() %>"><%= booking.status %></span></td>
+                                </tr>
+                            <% }); %>
+                        <% } else { %>
+                            <tr>
+                                <td colspan="4" style="text-align: center;">No recent bookings found</td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="logo">
+                <img src="/images/Logo 2.png" alt="Footer Logo">
+            </div>
+            <p>Address: Xavier University – Ateneo de Cagayan, 73 Corrales Ave, Cagayan de Oro, 9000 Misamis Oriental, Philippines</p>
+            <p>Phone: (63+) 9664201083 or (088) 123 4567</p>
+            <p>Email: flyjmdjairlines@gmail.com</p>
+            <p> 2024, JMDJ Development – JMDJ Airlines Ticketing System</p>
+        </div>
+    </footer>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Logout</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to logout?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeModal('logoutModal')">Cancel</button>
+                <button class="confirm-delete-btn" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Example: Update statistics periodically
+            function updateStats() {
+                // Add your statistics update logic here
+            }
+
+            // Update stats every 5 minutes
+            setInterval(updateStats, 300000);
+        });
+
+        async function handleLogout(event) {
+            event.preventDefault();
+            try {
+                const response = await fetch('/api/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // Clear any session storage data
+                    sessionStorage.clear();
+                    // Redirect to home page
+                    window.location.href = '/';
+                } else {
+                    console.error('Logout failed');
+                }
+            } catch (error) {
+                console.error('Error during logout:', error);
+            }
+        }
+    </script>
+
+    <script>
+        // Set min date to today for flight search
+        const dateInput = document.getElementById('date');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.min = today;
+
+        // Format date when input changes
+        dateInput.addEventListener('change', function() {
+            const date = new Date(this.value);
+            const day = date.toLocaleDateString('en-US', { weekday: 'short' });
+            const dayNum = date.toLocaleDateString('en-US', { day: '2-digit' });
+            const month = date.toLocaleDateString('en-US', { month: 'short' });
+            const formattedDate = `${day}, ${dayNum} ${month}`;
+            document.getElementById('departDate').value = formattedDate;
+        });
+    </script>
+
+    <script src="/js/admin-modal.js"></script>
+</body>
+</html>
